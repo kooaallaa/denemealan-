@@ -27,9 +27,9 @@
     --blob-a: 14px 46px 16px 44px / 44px 16px 46px 14px;
     --blob-b: 46px 14px 44px 16px / 16px 44px 14px 46px;
     --blob-c: 22px 22px 22px 22px / 22px 22px 22px 22px;
+    --title-color: #d4af37;
   }
 
-  /* --- KOYU TEMA RENKLERİ --- */
   body.dark-theme {
     --paper: #1a1921;
     --paper-line: #2d2b3a;
@@ -123,7 +123,6 @@
     pointer-events: none;
   }
 
-  /* --- İLK GİRİŞ EKRANI (ZORUNLU İSİM SEÇME) --- */
   .welcome-screen {
     display: flex;
     flex-direction: column;
@@ -134,9 +133,8 @@
     animation: fadeIn 0.5s ease;
   }
 
-  /* --- GİRİŞ VE ANA MENÜ EKRANI --- */
   .menu-screen {
-    display: none; /* JS ile açılacak */
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -146,10 +144,32 @@
     animation: fadeIn 0.5s ease;
   }
 
+  .menu-header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .gold-display {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    font-family: 'Kalam', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-dark);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
   .gear-btn {
     position: absolute;
-    top: 0;
     right: 0;
+    top: 10px;
     width: 42px;
     height: 42px;
     background: var(--card);
@@ -160,6 +180,7 @@
     cursor: pointer;
     box-shadow: 3px 3px 0 var(--ink);
     transition: all 0.15s;
+    z-index: 2;
   }
   .gear-btn:hover { transform: rotate(20deg); }
   .gear-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
@@ -174,6 +195,8 @@
     display: inline-block;
     position: relative;
     transform: rotate(-2deg);
+    z-index: 1;
+    margin-top: 10px;
   }
   .title::after {
     content: "";
@@ -218,7 +241,6 @@
     text-align: left;
   }
 
-  /* Gelişmiş İsim Giriş Grubu (Yandaki Doğrulama Butonlu) */
   .input-row-group {
     display: flex;
     gap: 8px;
@@ -270,7 +292,6 @@
   .name-status-msg.error { color: var(--steal); }
   .name-status-msg.success { color: var(--share); }
 
-  /* Seçim Grupları */
   .select-group {
     display: flex;
     gap: 8px;
@@ -296,7 +317,6 @@
     transform: rotate(-1deg);
   }
 
-  /* Mod Butonları */
   .mode-container {
     display: flex;
     flex-direction: column;
@@ -336,7 +356,6 @@
     background: rgba(46, 43, 61, 0.05);
   }
 
-  /* --- SEVİYE MODALI (OVERLAY) --- */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -425,8 +444,31 @@
     background: rgba(46, 43, 61, 0.1);
   }
 
-  /* --- OYUN ALANI --- */
   .game-screen { display: none; width: 100%; animation: fadeIn 0.4s ease; }
+
+  .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .pause-btn {
+    width: 38px;
+    height: 38px;
+    background: var(--card);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--ink);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pause-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--ink); }
 
   .hud {
     display: flex;
@@ -443,6 +485,14 @@
   .score-value { font-family: 'Kalam', cursive; font-size: 30px; font-weight: 700; color: var(--ink); }
   .score-value.you { color: var(--share-dark); }
   .score-value.bot { color: var(--steal-dark); }
+  .title-badge {
+    display: block;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 10px;
+    color: var(--title-color);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
   .bot-status-container { margin-top: 2px; font-size: 12px; font-family: 'Patrick Hand', cursive; font-weight: 400; }
   .bot-status-container.neutral { color: var(--pencil); }
   .bot-status-container.trust { color: var(--share-dark); }
@@ -475,12 +525,19 @@
     box-shadow: 6px 6px 0 var(--double-dark);
   }
 
+  .coin-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
   .coin {
     width: 86px; height: 86px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #fff 0%, var(--gold) 45%, var(--gold-dark) 100%);
     border: 2.5px solid var(--ink);
     display: flex; align-items: center; justify-content: center;
-    font-size: 34px; margin-bottom: 20px; transition: transform 0.5s;
+    font-size: 34px; transition: transform 0.5s;
   }
   .coin.spin { animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1); }
   @keyframes spin {
@@ -488,7 +545,7 @@
     100% { transform: rotateY(720deg); }
   }
 
-  .timer-ring { position: relative; width: 64px; height: 64px; margin-bottom: 20px; }
+  .timer-ring { position: relative; width: 64px; height: 64px; }
   .timer-ring svg { transform: rotate(-90deg); }
   .timer-ring circle { fill: none; stroke-width: 3.5; }
   .timer-track { stroke: rgba(46,43,61,0.12); }
@@ -509,7 +566,6 @@
   .choice-btn:active:not(:disabled) { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
   .choice-btn:disabled { opacity: 0.3; cursor: default; }
 
-  /* Dialog Alanı */
   .bot-dialog {
     font-family: 'Patrick Hand', cursive;
     font-style: italic;
@@ -535,7 +591,6 @@
   .points-line { margin-top: 14px; font-family: 'Patrick Hand', cursive; font-size: 14px; color: var(--ink-soft); }
   .next-hint { margin-top: 20px; font-family: 'Patrick Hand', cursive; font-size: 10px; letter-spacing: 1px; text-transform: none; color: var(--pencil); opacity: 0.9; }
 
-  /* --- OYUN SONU PANELİ --- */
   .final { text-align: center; width: 100%; display: none; }
   .final-title { font-family: 'Kalam', cursive; font-size: 32px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
   .final-title.win { color: var(--share-dark); }
@@ -600,7 +655,6 @@
     box-shadow: 0 0 0 var(--ink);
   }
 
-  /* --- PANEL VE GEÇMİŞ SEKMELERİ --- */
   .tabs {
     display: flex;
     border-bottom: 2px dashed var(--pencil);
@@ -634,7 +688,6 @@
   }
   .tab-content.active { display: block; }
 
-  /* Alt Kategori Filtre Butonları (7, 14, 21 için) */
   .sub-filters {
     display: flex;
     gap: 6px;
@@ -658,7 +711,6 @@
     color: var(--ink);
   }
 
-  /* Tablo Tasarımları */
   .table-item {
     display: flex;
     justify-content: space-between;
@@ -677,6 +729,52 @@
   .log-dot { width: 11px; height: 11px; border-radius: 48% 52% 51% 49%; background: #fff; border: 1.5px solid var(--pencil); }
   .log-dot.steal { background: var(--steal); border-color: var(--steal-dark); }
   .log-dot.share { background: var(--share); border-color: var(--share-dark); }
+
+  .tournament-bracket {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  .bracket-round {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px dashed var(--pencil);
+  }
+  .bracket-player {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 12px;
+    padding: 4px 8px;
+    background: var(--card);
+    border: 1px solid var(--ink);
+    border-radius: 6px;
+    min-width: 60px;
+    text-align: center;
+  }
+  .bracket-player.winner { background: var(--gold); border-color: var(--gold-dark); font-weight: 700; }
+
+  .achievement-notification {
+    position: fixed;
+    top: 20px;
+    right: -300px;
+    background: var(--gold);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 14px;
+    z-index: 2000;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: right 0.5s ease;
+  }
+  .achievement-notification.show { right: 20px; }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 </style>
@@ -702,9 +800,11 @@
   </div>
 
   <div class="menu-screen" id="menuScreen">
-    <button class="gear-btn" id="settingsBtn" onclick="openSettingsModal()" aria-label="Ayarlar">⚙️</button>
-    <div class="title">The Game Theory</div>
-    <div class="subtitle">Karar ver, riski yönet ya da güveni inşa et.</div>
+    <div class="menu-header">
+      <div class="gold-display" id="goldDisplay">🪙 <span id="goldAmount">0</span></div>
+      <div class="title">The Game Theory</div>
+      <button class="gear-btn" id="settingsBtn" onclick="openSettingsModal()" aria-label="Ayarlar">⚙️</button>
+    </div>
 
     <div class="input-card">
       <label class="input-label">OYUNCU ADI (Değiştirmek için yazıp yeşil tike bas!)</label>
@@ -724,12 +824,14 @@
       <div class="mode-container">
         <button class="action-btn" onclick="startQuickMatch()">⚡ HIZLI EŞLEŞME (Rastgele Bot)</button>
         <button class="action-btn secondary" id="levelBtnEl" onclick="openLevelModal()">🏆 SEVİYELİ MODLAR</button>
+        <button class="action-btn secondary" onclick="openTournamentMode()">🏟️ TURNUVA MODU (2 🪙)</button>
       </div>
     </div>
 
     <div class="tabs">
       <button class="tab-link active" onclick="switchTab('tabGlobal', this)">🏆 Zirvedekiler</button>
       <button class="tab-link" onclick="switchTab('tabWinners', this)">👑 Krallar</button>
+      <button class="tab-link" onclick="switchTab('tabAchievements', this)">🎖️ Başarımlar</button>
       <button class="tab-link" onclick="switchTab('tabHistory', this)">📜 Geçmişim</button>
     </div>
 
@@ -744,6 +846,10 @@
     
     <div class="tab-content" id="tabWinners">
       <div id="winnersList"><div style="text-align:center; padding:20px;">Yükleniyor...</div></div>
+    </div>
+
+    <div class="tab-content" id="tabAchievements">
+      <div id="achievementsList"></div>
     </div>
 
     <div class="tab-content" id="tabHistory">
@@ -761,6 +867,18 @@
       <div style="display: flex; gap: 10px;">
         <button class="close-modal-btn" style="flex: 1;" onclick="closeLevelModal()">Geri Dön</button>
         <button class="action-btn" style="flex: 2; font-size: 14px; padding: 10px;" onclick="startLevelMatch()">Seviyeyi Başlat</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="tournamentModal">
+    <div class="modal-card">
+      <div class="modal-title">🏟️ Turnuva Modu</div>
+      <div class="modal-desc">Giriş: 2 🪙 | Büyük Ödül: 10 🪙<br>3 Maç: 7 Tur → 14 Tur → 21 Tur<br>Kaybedersen elenirsin!</div>
+      <div id="tournamentBracket" class="tournament-bracket"></div>
+      <div style="display: flex; gap: 10px;">
+        <button class="close-modal-btn" style="flex: 1;" onclick="closeTournamentModal()">Geri Dön</button>
+        <button class="action-btn" style="flex: 2; font-size: 14px; padding: 10px;" onclick="startTournament()">Turnuvayı Başlat (2 🪙)</button>
       </div>
     </div>
   </div>
@@ -784,10 +902,25 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="pauseModal">
+    <div class="modal-card">
+      <div class="modal-title">⏸️ Oyun Duraklatıldı</div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <button class="action-btn" onclick="resumeGame()">▶️ Devam Et</button>
+        <button class="action-btn secondary" onclick="exitToMenuFromPause()">🏠 Ana Menüye Dön</button>
+      </div>
+    </div>
+  </div>
+
   <div class="game-screen" id="gameScreen">
+    <div class="game-header">
+      <div></div>
+      <button class="pause-btn" onclick="pauseGame()">⏸️</button>
+    </div>
     <div class="hud">
       <div class="score-box">
         <div class="score-label" id="hudPlayerName">Sen</div>
+        <span class="title-badge" id="hudTitleBadge"></span>
         <div class="score-value you" id="youScore">0</div>
       </div>
       <div class="round-pill" id="roundPill">Tur 1</div>
@@ -800,13 +933,15 @@
 
     <div class="stage" id="stagePanel">
       <div id="playArea" style="width: 100%; text-align: center;">
-        <div class="coin" id="coin">🪙</div>
-        <div class="timer-ring" style="margin: 0 auto 20px;">
-          <svg width="64" height="64">
-            <circle class="timer-track" cx="32" cy="32" r="28"></circle>
-            <circle class="timer-progress" id="timerCircle" cx="32" cy="32" r="28" stroke-dasharray="176" stroke-dashoffset="0"></circle>
-          </svg>
-          <div class="timer-num" id="timerNum">20</div>
+        <div class="coin-wrapper">
+          <div class="coin" id="coin">🪙</div>
+          <div class="timer-ring" style="margin-top: 10px;">
+            <svg width="64" height="64">
+              <circle class="timer-track" cx="32" cy="32" r="28"></circle>
+              <circle class="timer-progress" id="timerCircle" cx="32" cy="32" r="28" stroke-dasharray="176" stroke-dashoffset="0"></circle>
+            </svg>
+            <div class="timer-num" id="timerNum">20</div>
+          </div>
         </div>
         <div class="prompt" id="prompt">Kararını ver.</div>
         <div class="choices">
@@ -842,6 +977,8 @@
     </div>
     <div class="log" id="log"></div>
   </div>
+
+  <div id="achievementNotification" class="achievement-notification"></div>
 </div>
 
 <script>
@@ -882,9 +1019,15 @@
   let selectedLevel = 1;
   let currentTotalRounds = 7;
   let targetScore = 17;
-  let isLevelMode = false; 
+  let isLevelMode = false;
+  let isTournamentMode = false;
+  let tournamentRound = 0;
+  let goldCoins = parseInt(localStorage.getItem('goldCoins')) || 0;
+  let selectedTitle = localStorage.getItem('selectedTitle') || '';
+  let achievements = JSON.parse(localStorage.getItem('achievements')) || {};
+  let isPaused = false;
+  let pauseTimeLeft = 0;
 
-  // Koyu Tema Ayarları
   let isDarkMode = localStorage.getItem('darkMode') === 'true';
 
   // ==========================================
@@ -909,15 +1052,32 @@
   let scoreHistoryPlayer = [0]; 
   let scoreHistoryBot = [0];
 
+  const ACHIEVEMENTS = {
+    coldStart: { id: 'coldStart', name: 'Soğuk Bir Başlangıç', desc: 'Seviyeli modda ilk maçını kazandın!', title: 'Çaylak' },
+    unlucky13: { id: 'unlucky13', name: 'Uğursuz İlerleme', desc: 'Seviyeli modda 13. Seviyede kazandın!', title: 'Uğursuz' },
+    finisher: { id: 'finisher', name: 'Bitirici', desc: 'Seviyeli modda bütün seviyeleri başarıyla tamamladın!', title: 'Efsane' },
+    dirty7: { id: 'dirty7', name: 'Pis 7\'li', desc: '7 turluk oyunda bottan fazla puan al fakat maçı kaybet.', title: 'Şanssız Kahraman' },
+    unluckyDouble: { id: 'unluckyDouble', name: 'Şanssız', desc: '14 turluk hızlı oyunda Double Puan turunda 10 puan kazan fakat maçı kaybet.', title: 'Talihsiz' },
+    doubleOkay: { id: 'doubleOkay', name: 'Çift Okey', desc: '21 turluk oyunda 2 Double Puan turunda da 10\'ar puan kazan.', title: 'Double Ustası' },
+    topThree: { id: 'topThree', name: 'Zirve Yolcusu', desc: 'Zirvedekiler arasında herhangi bir modda ilk üçe gir.', title: 'Yolcu' },
+    topOne: { id: 'topOne', name: 'Zirvenin Ta Kendisi', desc: 'Zirvedekiler arasında herhangi bir modda 1. ol.', title: 'Zirve' },
+    vizier: { id: 'vizier', name: 'Vezir', desc: 'Krallar arasında ilk üçe gir.', title: 'Vezir' },
+    king: { id: 'king', name: 'Kral', desc: 'Krallar arasında 1. Ol.', title: 'Kral' }
+  };
+
   const BOT_STRATEGIES = {
     1: { 
       name: "Hayırsever Rahip - Seviye 1", 
       decide: () => Math.random() < 0.90 ? 'share' : 'steal',
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Barış ve cömertlik bu masanın tek kurtuluşudur, evladım.";
-        if (prevYou === 'steal') return "Canımı yaktın ama ruhunu kurtarmak için sana tekrar merhamet sunacağım.";
-        return "Birlikte paylaşmak kalbe huzur veriyor. Doğru yoldayız.";
-      }
+      quotes: [
+        "Barış ve cömertlik bu masanın tek kurtuluşudur, evladım.",
+        "Paylaşmak, ruhun en yüce erdemidir. Sen de bunu hissedeceksin.",
+        "Her kaybediş, aslında bir kazançtır. Unutma bunu.",
+        "Merhamet, en büyük güçtür. Sana güveniyorum.",
+        "Bu dünyada iyilik her zaman kazanır, göreceksin.",
+        "Kalbim temiz, niyetim barış. Sen de öyle ol."
+      ],
+      getQuote: () => BOT_STRATEGIES[1].quotes[Math.floor(Math.random() * BOT_STRATEGIES[1].quotes.length)]
     },
     2: { 
       name: "Sabırlı Kütüphaneci - Seviye 2", 
@@ -925,20 +1085,28 @@
         if (playerHistory.length < 2) return 'share';
         return (playerHistory[playerHistory.length - 1] === 'steal' && playerHistory[playerHistory.length - 2] === 'steal') ? 'steal' : 'share';
       },
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Kitaplar her zaman ikinci bir şans verilmesi gerektiğini yazar. Sessizliği bozmayalım.";
-        if (prevYou === 'steal' && playerHistory[playerHistory.length-2] !== 'steal') return "Bu ilk uyarımdı. Saygısızlığı bir kez görmezden gelebilirim ama ikincisinde kurallara göre oynamalıyım.";
-        if (prevYou === 'steal') return "Üst üste iki kez kuralları çiğnedin. Artık sessiz kalamam!";
-        return "Sayfalar huzurla çevriliyor, uyum içindeyiz.";
-      }
+      quotes: [
+        "Kitaplar her zaman ikinci bir şans verilmesi gerektiğini yazar.",
+        "Sessizlik içinde düşünürüm, her hamleni analiz ederim.",
+        "Tarih tekerrürden ibarettir. Sen de aynı hatayı yapma.",
+        "Sayfalar huzurla çevriliyor, uyum içindeyiz.",
+        "Bilgelik, acele etmemeyi gerektirir. Bekliyorum.",
+        "Her kelimen bir iz bırakır. Dikkatli seç sözlerini."
+      ],
+      getQuote: () => BOT_STRATEGIES[2].quotes[Math.floor(Math.random() * BOT_STRATEGIES[2].quotes.length)]
     },
     3: { 
       name: "Sokak Kumarbazı - Seviye 3", 
       decide: () => Math.random() < 0.5 ? 'steal' : 'share',
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Zarlar atıldı dostum! Şansına ne çıkarsa artık.";
-        return "Kazanmak ya da kaybetmek... Hayat tamamen bir yazı tura oyunudur. Son hamlen beni hiç şaşırtmadı.";
-      }
+      quotes: [
+        "Zarlar atıldı dostum! Şansına ne çıkarsa artık.",
+        "Hayat bir kumardır, ben de bu masada şansımı denerim.",
+        "Risk almazsan kazanamazsın, değil mi?",
+        "Bazen kaybedersin, bazen kazanırsın. Önemli olan oyunda kalmak.",
+        "Şans bugün kimin yanında acaba? Göreceğiz.",
+        "Kartlar dağıtıldı, hadi bakalım!"
+      ],
+      getQuote: () => BOT_STRATEGIES[3].quotes[Math.floor(Math.random() * BOT_STRATEGIES[3].quotes.length)]
     },
     4: { 
       name: "Kopya Kedisi (Aktris) - Seviye 4", 
@@ -947,19 +1115,28 @@
         if (Math.random() < 0.10) return playerHistory[playerHistory.length - 1] === 'steal' ? 'share' : 'steal';
         return playerHistory[playerHistory.length - 1];
       },
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Sahneye çıkıyorum! Senin enerjin neyse, benimki de o olacak.";
-        return `Harika bir taklitçiyimdir. Bana sunduğun rolü oynuyorum: '${prevYou === 'steal' ? 'Bir hain' : 'Bir dost'}'!`;
-      }
+      quotes: [
+        "Sahneye çıkıyorum! Senin enerjin neyse, benimki de o olacak.",
+        "Harika bir taklitçiyimdir. Rolümü mükemmel oynarım.",
+        "Ayna gibi davranırım, ne verirsen onu alırsın.",
+        "Her jestin, her mimikin benim için bir senaryo.",
+        "Sahne ışıkları altında gerçekler kaybolur.",
+        "Taklit, en içten iltifattır derler."
+      ],
+      getQuote: () => BOT_STRATEGIES[4].quotes[Math.floor(Math.random() * BOT_STRATEGIES[4].quotes.length)]
     },
     5: { 
       name: "Kibar Diplomat - Seviye 5", 
       decide: () => playerHistory.length === 0 ? 'share' : playerHistory[playerHistory.length - 1],
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Uluslararası bir mutabakat arıyorum. İlk adım benden: Paylaşıyorum.";
-        if (prevYou === 'steal') return "Büyükelçiliğimize yapılan bu saldırı karşılıksız kalmayacaktır, diplomatik misilleme dönemindeyiz.";
-        return "Karşılıklı iyi niyet ilişkilerimizi güçlendiriyor. Bu barışı koruyalom.";
-      }
+      quotes: [
+        "Uluslararası bir mutabakat arıyorum. İlk adım benden.",
+        "Diplomasi, karşılıklı saygı üzerine kuruludur.",
+        "Her anlaşmanın bir bedeli vardır. Ben barıştan yanayım.",
+        "Stratejik düşünür, uzun vadeli plan yaparım.",
+        "Masada her zaman bir kazan-kazan durumu ararım.",
+        "Protokol gereği, misilleme yapmak zorunda kalabilirim."
+      ],
+      getQuote: () => BOT_STRATEGIES[5].quotes[Math.floor(Math.random() * BOT_STRATEGIES[5].quotes.length)]
     },
     6: { 
       name: "Kurnaz Avukat - Seviye 6", 
@@ -968,10 +1145,15 @@
         if (playerHistory.length === 1) return playerHistory[0] === 'steal' ? 'share' : 'steal';
         return playerHistory[playerHistory.length - 1];
       },
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Sözleşmedeki boşlukları iyi bilirim. İlk hamlem senin sınırlarını ölçmek için.";
-        return "Hukukta her hamle bir emsal oluşturur. Müvekkilimin çıkarları için her yolu denerim.";
-      }
+      quotes: [
+        "Sözleşmedeki boşlukları iyi bilirim.",
+        "Müvekkilimin çıkarları için her yolu denerim.",
+        "Hukukta her hamle bir emsal oluşturur.",
+        "İtiraz ediyorum! Bu adil değil!",
+        "Delilleri inceledim, kararımı verdim.",
+        "Mahkeme salonunda gerçekler su yüzüne çıkar."
+      ],
+      getQuote: () => BOT_STRATEGIES[6].quotes[Math.floor(Math.random() * BOT_STRATEGIES[6].quotes.length)]
     },
     7: { 
       name: "Borsa Analisti - Seviye 7", 
@@ -980,10 +1162,15 @@
         const recent = playerHistory.slice(-4);
         return (recent.filter(h => h === 'steal').length > recent.length / 2) ? 'steal' : 'share';
       },
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Grafikler stabil görünüyor. Risk almadan uzun vadeli yatırımla başlayalım.";
-        return "Son verileri analiz ettim. Güven endeksi dalgalanıyor, hamlemi rasyonel verilere göre yapıyorum.";
-      }
+      quotes: [
+        "Grafikler stabil görünüyor. Risk almadan başlayalım.",
+        "Piyasa dalgalı, dikkatli olmalıyız.",
+        "Verileri analiz ettim, trend yukarı yönlü.",
+        "Yatırım tavsiyesi değildir, ama paylaşmak mantıklı.",
+        "Borsada olduğu gibi, burada da sabır kazandırır.",
+        "Risk-getiri oranını hesapladım, kararımı verdim."
+      ],
+      getQuote: () => BOT_STRATEGIES[7].quotes[Math.floor(Math.random() * BOT_STRATEGIES[7].quotes.length)]
     },
     8: { 
       name: "Dedektif - Seviye 8", 
@@ -992,34 +1179,301 @@
         if (playerHistory.length < 4) return proto[playerHistory.length];
         return playerHistory.includes('steal') ? playerHistory[playerHistory.length - 1] : 'steal';
       },
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Açık bir vaka, dostum Watson... İpuçlarını toplamaya başladım.";
-        if (playerHistory.length < 4) return "Bu yaptığım küçük test zihninin derinliklerindeki suçu açığa çıkarmak içindi.";
-        return "Bütün taşlar yerine oturuyor. Son hareketin seni ele verdi, tam olarak beklediğim profil.";
-      }
+      quotes: [
+        "Açık bir vaka, dostum Watson... İpuçlarını topluyorum.",
+        "Her suçlu bir iz bırakır. Sen de bırakacaksın.",
+        "Büyüteçle inceliyorum her hareketini.",
+        "Elementer, sevgili dostum!",
+        "Bu bir testti ve sen geçtin... ya da geçemedin.",
+        "Suç mahallinde gerçekler saklıdır."
+      ],
+      getQuote: () => BOT_STRATEGIES[8].quotes[Math.floor(Math.random() * BOT_STRATEGIES[8].quotes.length)]
     },
     9: { 
-      name: "Kinci Mafya Babası - Seviye 9", 
-      decide: () => playerHistory.length === 0 ? 'share' : (playerHistory.includes('steal') ? 'steal' : 'share'),
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Bu masada saygı her şeydir evlat. Sana bir kez güveniyorum.";
-        if (playerHistory.includes('steal')) return "Ailemize bir kere ihanet ettin. Artık bu masadan sağ çıkamazsın. Her tur acı çekeceksin.";
-        return "Sadakatini takdir ediyorum. İş ortaklığımız tıkırında gidiyor.";
-      }
+      name: "Yırtıcı Avcı - Seviye 9", 
+      decide: () => Math.random() < 0.90 ? 'steal' : 'share',
+      quotes: [
+        "Zayıflara bu ormanda yer yok.",
+        "Sadece hayatta kalanlar konuşur.",
+        "Gözlerindeki korkuyu görebiliyorum.",
+        "Paylaşmak zayıfların uydurduğu bir masaldır.",
+        "Avımı asla kaçırmam.",
+        "Bu vahşi doğada güçlü olan kazanır."
+      ],
+      getQuote: () => BOT_STRATEGIES[9].quotes[Math.floor(Math.random() * BOT_STRATEGIES[9].quotes.length)]
     },
     10: { 
-      name: "Yırtıcı Avcı - Seviye 10", 
-      decide: () => Math.random() < 0.90 ? 'steal' : 'share',
-      getQuote: (prevYou, prevBot) => {
-        if (!prevYou) return "Zayıflara bu ormanda yer yok. Sadece hayatta kalanlar konuşur.";
-        return "Gözlerindeki korkuyu görebiliyorum. Paylaşmak zayıfların uydurduğu bir masaldır.";
-      }
+      name: "Demir Leydi - Seviye 10", 
+      decide: () => playerHistory.length < 3 ? 'share' : (playerHistory.filter(h => h === 'steal').length > 1 ? 'steal' : 'share'),
+      quotes: [
+        "Sert olmadan barış olmaz. Bunu öğrenmelisin.",
+        "Taviz vermek zayıflıktır, ben zayıf değilim.",
+        "Demir iradeyle yönetirim bu masayı.",
+        "Kuralları ben koyarım, sen uyarsın.",
+        "Güçlü olan hayatta kalır, zayıf olan ezilir.",
+        "Bu bir savaş ve ben kazanmak için buradayım."
+      ],
+      getQuote: () => BOT_STRATEGIES[10].quotes[Math.floor(Math.random() * BOT_STRATEGIES[10].quotes.length)]
+    },
+    11: { 
+      name: "Gizemli Simyacı - Seviye 11", 
+      decide: () => Math.random() < 0.4 ? 'steal' : 'share',
+      quotes: [
+        "Elementlerin dengesi bozulmamalı.",
+        "Kurşunu altına çevirebilirim, ama güveni asla.",
+        "Her maddenin bir özü vardır, senin de özünü görüyorum.",
+        "Simya sırlarla doludur, tıpkı bu oyun gibi.",
+        "Doğru formülü bulursam, her şey mümkün.",
+        "İksirim hazır, sonuçları göreceğiz."
+      ],
+      getQuote: () => BOT_STRATEGIES[11].quotes[Math.floor(Math.random() * BOT_STRATEGIES[11].quotes.length)]
+    },
+    12: { 
+      name: "Korsan Kaptan - Seviye 12", 
+      decide: () => playerHistory.length === 0 ? 'steal' : (playerHistory[playerHistory.length-1] === 'steal' ? 'steal' : 'share'),
+      quotes: [
+        "Yarrr! Hazine benim olacak!",
+        "Denizlerin kanunu: Al ya da alın!",
+        "Korsanlar paylaşmaz, yağmalar!",
+        "Bu define haritasında ihanet yazıyor.",
+        "Gemimi batırmaya cesaretin var mı?",
+        "Altınlarımı korumak için her şeyi yaparım."
+      ],
+      getQuote: () => BOT_STRATEGIES[12].quotes[Math.floor(Math.random() * BOT_STRATEGIES[12].quotes.length)]
+    },
+    13: { 
+      name: "Medyum - Seviye 13", 
+      decide: () => {
+        if (playerHistory.length < 2) return 'share';
+        const predict = Math.random() < 0.6 ? 'share' : 'steal';
+        return predict;
+      },
+      quotes: [
+        "Ruhlar bana geleceği fısıldıyor...",
+        "Kristal küremde senin bir hain olduğunu gördüm!",
+        "Altıncı hissim asla yanılmaz.",
+        "Kader çizgilerin çok karışık, dostum.",
+        "Öteki taraftan mesajlar alıyorum.",
+        "Sezgilerim güçlüdür, bana güven."
+      ],
+      getQuote: () => BOT_STRATEGIES[13].quotes[Math.floor(Math.random() * BOT_STRATEGIES[13].quotes.length)]
+    },
+    14: { 
+      name: "Robot - Seviye 14", 
+      decide: () => {
+        if (playerHistory.length === 0) return 'share';
+        const pattern = playerHistory.join('');
+        if (pattern.length > 3 && pattern.slice(-3) === 'stealstealsteal') return 'steal';
+        return 'share';
+      },
+      quotes: [
+        "Hesaplama modu aktif. Optimal strateji belirleniyor.",
+        "Veri analizi tamamlandı. Paylaşım öneriliyor.",
+        "Algoritma güncellendi. Tehdit algılandı.",
+        "Makine öğrenimi devrede. Adaptasyon sağlanıyor.",
+        "Binary düşünürüm: 0 veya 1, paylaş veya çal.",
+        "Sistem hatası! İnsan duyguları anlaşılamıyor."
+      ],
+      getQuote: () => BOT_STRATEGIES[14].quotes[Math.floor(Math.random() * BOT_STRATEGIES[14].quotes.length)]
+    },
+    15: { 
+      name: "Şövalye - Seviye 15", 
+      decide: () => playerHistory.length < 5 ? 'share' : (playerHistory[playerHistory.length-1] === 'steal' ? 'steal' : 'share'),
+      quotes: [
+        "Onurum için savaşırım, ama önce barışı denerim.",
+        "Şövalye yemini ettim: Adil olacağım.",
+        "Kalkanım seni koruyabilir veya sana karşı kullanılabilir.",
+        "Kralım için buradayım, zafer benim olacak.",
+        "Dürüstlük en büyük silahtır.",
+        "Düello başlasın! Centilmence oynayalım."
+      ],
+      getQuote: () => BOT_STRATEGIES[15].quotes[Math.floor(Math.random() * BOT_STRATEGIES[15].quotes.length)]
+    },
+    16: { 
+      name: "Gölge Suikastçı - Seviye 16", 
+      decide: () => Math.random() < 0.7 ? 'steal' : 'share',
+      quotes: [
+        "Gölgelerde saklanırım, darbemi indirmeden önce.",
+        "Sessizlik ölümün habercisidir.",
+        "Hedefim sensin, kaçış yok.",
+        "Suikast sanatında ustayım.",
+        "Karanlıkta kimse beni göremez.",
+        "Tek atış, tek ölüm. Bu benim yolum."
+      ],
+      getQuote: () => BOT_STRATEGIES[16].quotes[Math.floor(Math.random() * BOT_STRATEGIES[16].quotes.length)]
+    },
+    17: { 
+      name: "Filozof - Seviye 17", 
+      decide: () => {
+        const stealCount = playerHistory.filter(h => h === 'steal').length;
+        return stealCount > playerHistory.length / 2 ? 'steal' : 'share';
+      },
+      quotes: [
+        "Düşünüyorum, öyleyse çalıyorum... ya da paylaşıyorum.",
+        "Etik ve ahlak bu masada sınanır.",
+        "Varoluşun anlamı belki de bu seçimlerde saklı.",
+        "Özgür irade, en büyük yanılgıdır.",
+        "Platon'un mağarasındayız, gerçeği kim bilebilir?",
+        "Sorgulanmamış bir hayat yaşanmaya değmez."
+      ],
+      getQuote: () => BOT_STRATEGIES[17].quotes[Math.floor(Math.random() * BOT_STRATEGIES[17].quotes.length)]
+    },
+    18: { 
+      name: "Büyücü - Seviye 18", 
+      decide: () => {
+        if (playerHistory.length < 2) return 'share';
+        return playerHistory[playerHistory.length-1] === playerHistory[playerHistory.length-2] ? 'steal' : 'share';
+      },
+      quotes: [
+        "Sihirli değneğimle kaderini değiştirebilirim.",
+        "Abrakadabra! Puanların yok olsun!",
+        "Büyücülük sırlarla doludur, tıpkı stratejim gibi.",
+        "İksirim seni ya güçlendirir ya da zayıflatır.",
+        "Kehanet: Bu tur ilginç olacak.",
+        "Büyü her zaman işe yaramaz, bazen mantık gerekir."
+      ],
+      getQuote: () => BOT_STRATEGIES[18].quotes[Math.floor(Math.random() * BOT_STRATEGIES[18].quotes.length)]
+    },
+    19: { 
+      name: "Asi Lider - Seviye 19", 
+      decide: () => playerHistory.includes('steal') ? 'steal' : 'share',
+      quotes: [
+        "Sisteme karşıyım! Kuralları yıkalım!",
+        "Devrim kanla yazılır, bu masada da öyle.",
+        "Ya benimlesin ya da karşımdasın.",
+        "Özgürlük için savaşıyorum, bedeli ne olursa olsun.",
+        "Bu düzende paylaşmak zayıflıktır.",
+        "İsyan ateşini ben yaktım, şimdi sıra sende."
+      ],
+      getQuote: () => BOT_STRATEGIES[19].quotes[Math.floor(Math.random() * BOT_STRATEGIES[19].quotes.length)]
+    },
+    20: { 
+      name: "Efsanevi General - Seviye 20", 
+      decide: () => {
+        if (playerHistory.length < 4) return 'share';
+        const lastFour = playerHistory.slice(-4);
+        const stealCount = lastFour.filter(h => h === 'steal').length;
+        return stealCount >= 2 ? 'steal' : 'share';
+      },
+      quotes: [
+        "Savaş meydanında zafer benimdir.",
+        "Strateji olmadan savaş kazanılmaz.",
+        "Askerlerim beni izler, ben de seni.",
+        "Bu bir meydan muharebesi, hazır ol!",
+        "Geri çekilmek yok, sadece ileri!",
+        "Tarih kitapları bu zaferi yazacak."
+      ],
+      getQuote: () => BOT_STRATEGIES[20].quotes[Math.floor(Math.random() * BOT_STRATEGIES[20].quotes.length)]
     }
   };
 
+  // ==========================================
+  // 🎖️ BAŞARIM SİSTEMİ
+  // ==========================================
+  function checkAchievements() {
+    const newAchievements = { ...achievements };
+    
+    // Soğuk Başlangıç
+    if (isLevelMode && youScore > botScore && !newAchievements.coldStart) {
+      newAchievements.coldStart = true;
+      showAchievementNotification(ACHIEVEMENTS.coldStart);
+    }
+    
+    // Uğursuz İlerleme (Seviye 13)
+    if (isLevelMode && selectedLevel === 13 && youScore > botScore && !newAchievements.unlucky13) {
+      newAchievements.unlucky13 = true;
+      showAchievementNotification(ACHIEVEMENTS.unlucky13);
+    }
+    
+    // Bitirici (Tüm seviyeleri bitirme - maxUnlockedLevel 20 olduğunda)
+    if (maxUnlockedLevel >= 20 && !newAchievements.finisher) {
+      newAchievements.finisher = true;
+      showAchievementNotification(ACHIEVEMENTS.finisher);
+    }
+    
+    // Pis 7'li
+    if (currentTotalRounds === 7 && youScore > botScore && youScore < targetScore && !isLevelMode && !newAchievements.dirty7) {
+      newAchievements.dirty7 = true;
+      showAchievementNotification(ACHIEVEMENTS.dirty7);
+    }
+    
+    // Şanssız
+    if (currentTotalRounds === 14 && !isLevelMode && !newAchievements.unluckyDouble) {
+      let doubleRoundEarned = false;
+      for (let i = 0; i < playerHistory.length; i++) {
+        if (i === 6 && (playerHistory[i] === 'steal' && botHistory[i] === 'share')) {
+          doubleRoundEarned = true;
+        }
+      }
+      if (doubleRoundEarned && youScore < targetScore && youScore > botScore) {
+        newAchievements.unluckyDouble = true;
+        showAchievementNotification(ACHIEVEMENTS.unluckyDouble);
+      }
+    }
+    
+    // Çift Okey
+    if (currentTotalRounds === 21 && !isLevelMode && !newAchievements.doubleOkay) {
+      let doubleRoundsEarned = 0;
+      for (let i = 0; i < playerHistory.length; i++) {
+        if ((i === 4 || i === 16) && playerHistory[i] === 'steal' && botHistory[i] === 'share') {
+          doubleRoundsEarned++;
+        }
+      }
+      if (doubleRoundsEarned === 2) {
+        newAchievements.doubleOkay = true;
+        showAchievementNotification(ACHIEVEMENTS.doubleOkay);
+      }
+    }
+    
+    achievements = newAchievements;
+    localStorage.setItem('achievements', JSON.stringify(achievements));
+    
+    // Liderlik başarımları saveToFirebaseAndLocal içinde kontrol edilecek
+  }
+
+  function showAchievementNotification(achievement) {
+    const notif = document.getElementById('achievementNotification');
+    notif.innerHTML = `🎖️ <b>${achievement.name}</b><br>${achievement.desc}<br><span style="font-size:11px;">Yeni Ünvan: ${achievement.title}</span>`;
+    notif.classList.add('show');
+    setTimeout(() => {
+      notif.classList.remove('show');
+    }, 3000);
+  }
+
+  function loadAchievementsList() {
+    const list = document.getElementById('achievementsList');
+    let html = '';
+    
+    if (Object.keys(achievements).length === 0) {
+      html = '<div style="text-align:center; padding:20px; color:var(--ink-soft);">Henüz hiç başarım kazanmadın.</div>';
+    } else {
+      html += '<div style="display:flex; flex-direction:column; gap:8px;">';
+      for (const [key, ach] of Object.entries(ACHIEVEMENTS)) {
+        if (achievements[key]) {
+          html += `<div class="table-item" style="background:var(--gold); border-radius:8px; opacity:1;">
+            <div><b>${ach.name}</b><br><span style="font-size:10px;">${ach.desc}</span></div>
+            <button class="close-modal-btn" style="font-size:10px; padding:4px 8px;" onclick="selectTitle('${ach.title}')">Ünvanı Seç</button>
+          </div>`;
+        } else {
+          html += `<div class="table-item" style="opacity:0.4;">
+            <div><b>???</b><br><span style="font-size:10px;">Gizli Başarım</span></div>
+          </div>`;
+        }
+      }
+      html += '</div>';
+    }
+    
+    list.innerHTML = html;
+  }
+
+  function selectTitle(title) {
+    selectedTitle = title;
+    localStorage.setItem('selectedTitle', title);
+    alert(`"${title}" ünvanı seçildi!`);
+  }
+
   // --- BAŞLANGIÇ İNİT ---
   window.addEventListener('DOMContentLoaded', () => {
-    // Koyu tema yükle
     if (isDarkMode) {
       document.body.classList.add('dark-theme');
       document.getElementById('themeToggle').checked = true;
@@ -1027,8 +1481,8 @@
 
     document.getElementById('volumeSlider').value = volumeLevel;
     document.getElementById('muteToggleBtn').textContent = isMuted ? '🔇' : '🔊';
+    updateGoldDisplay();
 
-    // Oyuncu kontrolü
     if (!username || !usernameClaimed) {
       document.getElementById('welcomeScreen').style.display = 'flex';
       document.getElementById('menuScreen').style.display = 'none';
@@ -1038,10 +1492,15 @@
       document.getElementById('menuScreen').style.display = 'flex';
       loadLeaderboardByRound(7);
       loadLocalHistory();
+      loadAchievementsList();
     }
   });
 
   document.addEventListener('click', initMusic, { once: true });
+
+  function updateGoldDisplay() {
+    document.getElementById('goldAmount').textContent = goldCoins;
+  }
 
   // ==========================================
   // 🌓 KOYU TEMA YÖNETİMİ
@@ -1057,7 +1516,7 @@
   }
 
   // ==========================================
-  // 🔑 BENZERSİZ İSİM DOĞRULAMA (FIREBASE DESTEKLİ)
+  // 🔑 BENZERSİZ İSİM DOĞRULAMA
   // ==========================================
   async function verifyAndClaimName(screen) {
     const inputId = screen === 'welcome' ? 'welcomeUsernameInput' : 'usernameInput';
@@ -1083,7 +1542,6 @@
       return;
     }
 
-    // Eğer zaten kendi onaylı ismiyse tekrar sorgulatma
     if (usernameClaimed && inputVal === username) {
       statusEl.textContent = "Bu zaten senin ismin. ✓";
       statusEl.classList.add('success');
@@ -1094,9 +1552,7 @@
     statusEl.textContent = "Kontrol ediliyor...";
     statusEl.classList.add('success');
 
-    // Yerel Firebase kontrolü
     if (!isFirebaseReady || !db) {
-      // Firebase yoksa yerel onayla devam et
       username = inputVal;
       usernameClaimed = true;
       localStorage.setItem('username', username);
@@ -1121,13 +1577,11 @@
           document.getElementById('welcomeStartBtn').style.display = "none";
         }
       } else {
-        // Eski ismi temizlemek istersen burada silebilirsin ama basitlik açısından direkt yeni ismi rezerve edelim.
         await db.collection('usernames').doc(nameKey).set({
           display: inputVal,
           claimedAt: new Date().getTime()
         });
 
-        // Başarılı durum
         username = inputVal;
         usernameClaimed = true;
         localStorage.setItem('username', username);
@@ -1141,7 +1595,6 @@
       }
     } catch (e) {
       console.error(e);
-      // Firebase'deki hata durumlarında kilitlenmeyi önleyip lokalde izin verelim
       username = inputVal;
       usernameClaimed = true;
       localStorage.setItem('username', username);
@@ -1273,7 +1726,7 @@
   function renderLevelGrid() {
     const grid = document.getElementById('levelGrid');
     grid.innerHTML = '';
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 20; i++) {
       const btn = document.createElement('button');
       btn.className = 'level-btn';
       if (i > maxUnlockedLevel) {
@@ -1292,6 +1745,51 @@
     }
   }
 
+  // --- TURNUVA MODU ---
+  function openTournamentMode() {
+    document.getElementById('tournamentModal').style.display = 'flex';
+    renderTournamentBracket();
+  }
+
+  function closeTournamentModal() {
+    document.getElementById('tournamentModal').style.display = 'none';
+  }
+
+  function renderTournamentBracket() {
+    const bracket = document.getElementById('tournamentBracket');
+    bracket.innerHTML = `
+      <div class="bracket-round">
+        <div class="bracket-player">${username}</div>
+        <span>vs</span>
+        <div class="bracket-player">Bot 1</div>
+      </div>
+      <div class="bracket-round">
+        <div class="bracket-player">Bot 2</div>
+        <span>vs</span>
+        <div class="bracket-player">Bot 3</div>
+      </div>
+      <div style="text-align:center; margin:5px 0;">↓ Yarı Final (14 Tur) ↓</div>
+      <div style="text-align:center; margin:5px 0;">↓ Final (21 Tur) ↓</div>
+    `;
+  }
+
+  function startTournament() {
+    if (goldCoins < 2) {
+      alert("Yeterli altın paran yok! Turnuva için 2 🪙 gerekli.");
+      return;
+    }
+    goldCoins -= 2;
+    localStorage.setItem('goldCoins', goldCoins);
+    updateGoldDisplay();
+    isTournamentMode = true;
+    tournamentRound = 1;
+    currentTotalRounds = 7;
+    targetScore = 17;
+    isLevelMode = false;
+    closeTournamentModal();
+    initGame();
+  }
+
   function setMode(turns, btn) {
     document.querySelectorAll('.select-group .select-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -1307,8 +1805,9 @@
       alert("Önce ismini yazıp yeşil tik butonuyla doğrulamalısın!");
       return;
     }
-    selectedLevel = Math.floor(Math.random() * 10) + 1;
-    isLevelMode = false; 
+    selectedLevel = Math.floor(Math.random() * 20) + 1;
+    isLevelMode = false;
+    isTournamentMode = false;
     initGame();
   }
 
@@ -1320,6 +1819,7 @@
     currentTotalRounds = 14;
     targetScore = 34;
     isLevelMode = true;
+    isTournamentMode = false;
     closeLevelModal();
     initGame();
   }
@@ -1327,6 +1827,15 @@
   function initGame() {
     document.getElementById('hudPlayerName').textContent = username;
     document.getElementById('pNameText').textContent = username;
+    
+    // Ünvan gösterimi
+    const titleBadge = document.getElementById('hudTitleBadge');
+    if (selectedTitle) {
+      titleBadge.textContent = `"${selectedTitle}"`;
+      titleBadge.style.display = 'block';
+    } else {
+      titleBadge.style.display = 'none';
+    }
 
     document.getElementById('menuScreen').style.display = 'none';
     document.getElementById('gameScreen').style.display = 'block';
@@ -1339,17 +1848,17 @@
     document.getElementById('botStatus').className = "bot-status-container neutral";
     document.getElementById('log').innerHTML = '';
 
-    showBotDialog(null, null);
+    showBotDialog();
     startRound();
   }
 
-  function showBotDialog(prevYou, prevBot) {
+  function showBotDialog() {
     const dialogBox = document.getElementById('botDialog');
     if (!isLevelMode) {
       dialogBox.style.display = 'none';
       return;
     }
-    const quote = BOT_STRATEGIES[selectedLevel].getQuote(prevYou, prevBot);
+    const quote = BOT_STRATEGIES[selectedLevel].getQuote();
     dialogBox.textContent = `"${quote}"`;
     dialogBox.style.display = 'block';
   }
@@ -1393,6 +1902,12 @@
     document.getElementById('timerNum').textContent = timeLeft;
 
     if (timerInterval) clearInterval(timerInterval);
+    if (isPaused) {
+      timeLeft = pauseTimeLeft;
+      isPaused = false;
+      document.getElementById('pauseModal').style.display = 'none';
+    }
+    
     timerInterval = setInterval(() => {
       timeLeft--;
       document.getElementById('timerNum').textContent = timeLeft;
@@ -1407,13 +1922,38 @@
     }, 1000);
   }
 
+  function pauseGame() {
+    if (decided) return;
+    isPaused = true;
+    pauseTimeLeft = timeLeft;
+    clearInterval(timerInterval);
+    document.getElementById('pauseModal').style.display = 'flex';
+  }
+
+  function resumeGame() {
+    document.getElementById('pauseModal').style.display = 'none';
+    startRound();
+  }
+
+  function exitToMenuFromPause() {
+    clearInterval(timerInterval);
+    isPaused = false;
+    document.getElementById('pauseModal').style.display = 'none';
+    document.getElementById('gameScreen').style.display = 'none';
+    document.getElementById('finalArea').style.display = 'none';
+    document.getElementById('menuScreen').style.display = 'flex';
+    document.body.classList.remove('outcome-win', 'outcome-lose', 'outcome-draw');
+    if (isDarkMode) {
+      document.body.classList.add('dark-theme');
+    }
+    loadLeaderboardByRound(currentTotalRounds);
+    loadLocalHistory();
+  }
+
   function makeChoice(playerChoice) {
     if (decided) return;
     decided = true;
     clearInterval(timerInterval);
-
-    document.getElementById('stealBtn').disabled = true;
-    document.getElementById('shareBtn').disabled = true;
 
     const coin = document.getElementById('coin');
     coin.classList.add('spin');
@@ -1486,7 +2026,7 @@
     document.getElementById('playArea').style.display = 'none';
     document.getElementById('resultArea').style.display = 'block';
 
-    showBotDialog(playerChoice, botChoice);
+    showBotDialog();
 
     setTimeout(() => {
       startRound();
@@ -1517,7 +2057,7 @@
       if (missionPassed) {
         statMission.textContent = `BAŞARILI! (${targetScore} puan hedefine ulaştın)`;
         statMission.style.color = 'var(--share-dark)';
-        if (selectedLevel === maxUnlockedLevel && maxUnlockedLevel < 10) {
+        if (selectedLevel === maxUnlockedLevel && maxUnlockedLevel < 20) {
           maxUnlockedLevel++;
           localStorage.setItem('maxUnlockedLevel', maxUnlockedLevel);
         }
@@ -1525,9 +2065,42 @@
         statMission.textContent = `BAŞARISIZ! (Hedeflenen ${targetScore} puana ulaşamadın)`;
         statMission.style.color = 'var(--steal-dark)';
       }
+    } else if (isTournamentMode) {
+      if (outcome === 'win') {
+        tournamentRound++;
+        if (tournamentRound === 2) {
+          currentTotalRounds = 14;
+          targetScore = 34;
+          statMission.textContent = "Çeyrek Finali Geçtin! Yarı Final başlıyor...";
+        } else if (tournamentRound === 3) {
+          currentTotalRounds = 21;
+          targetScore = 51;
+          statMission.textContent = "Yarı Finali Geçtin! Final maçı başlıyor...";
+        } else if (tournamentRound > 3) {
+          goldCoins += 10;
+          localStorage.setItem('goldCoins', goldCoins);
+          statMission.textContent = "🏆 TURNUVA ŞAMPİYONU! 10 🪙 kazandın!";
+          isTournamentMode = false;
+        }
+      } else {
+        statMission.textContent = "Turnuvadan elendin! 2 🪙 kaybettin.";
+        isTournamentMode = false;
+      }
+      statMission.style.color = outcome === 'win' ? 'var(--share-dark)' : 'var(--steal-dark)';
     } else {
       statMission.textContent = `Hızlı Eşleşme tamamlandı. Skorun: ${youScore}`;
       statMission.style.color = 'var(--gold-dark)';
+      
+      // Altın para ödülü
+      if (outcome === 'win') {
+        let goldReward = 0;
+        if (currentTotalRounds === 7) goldReward = 1;
+        else if (currentTotalRounds === 14) goldReward = 2;
+        else if (currentTotalRounds === 21) goldReward = 3;
+        goldCoins += goldReward;
+        localStorage.setItem('goldCoins', goldCoins);
+        statMission.textContent += ` (+${goldReward} 🪙)`;
+      }
     }
 
     const container = document.getElementById('historyVisualContainer');
@@ -1539,7 +2112,22 @@
       </div>
     `).join('');
 
+    checkAchievements();
     saveToFirebaseAndLocal();
+
+    if (isTournamentMode && outcome === 'win' && tournamentRound <= 3) {
+      setTimeout(() => {
+        round = 0; youScore = 0; botScore = 0; playerHistory = []; botHistory = [];
+        scoreHistoryPlayer = [0]; scoreHistoryBot = [0];
+        document.getElementById('youScore').textContent = '0';
+        document.getElementById('botScore').textContent = '0';
+        document.getElementById('log').innerHTML = '';
+        document.getElementById('playArea').style.display = 'block';
+        document.getElementById('resultArea').style.display = 'none';
+        document.getElementById('finalArea').style.display = 'none';
+        startRound();
+      }, 2000);
+    }
   }
 
   function exitToMenu() {
@@ -1547,17 +2135,20 @@
     document.getElementById('finalArea').style.display = 'none';
     document.getElementById('menuScreen').style.display = 'flex';
     document.body.classList.remove('outcome-win', 'outcome-lose', 'outcome-draw');
+    updateGoldDisplay();
     
-    // Koyu temayı koru
     if (isDarkMode) {
       document.body.classList.add('dark-theme');
     }
 
     loadLeaderboardByRound(currentTotalRounds);
     loadLocalHistory();
+    loadAchievementsList();
   }
 
   function saveToFirebaseAndLocal() {
+    if (isLevelMode) return; // Seviyeli mod skorları liderlik tablosuna eklenmez
+
     const gameRecord = {
       username: username,
       score: youScore,
@@ -1573,9 +2164,79 @@
 
     if (isFirebaseReady && db) {
       db.collection("scores").add(gameRecord)
-        .then(() => console.log("Skor kaydedildi."))
+        .then(() => {
+          console.log("Skor kaydedildi.");
+          // Liderlik başarımlarını kontrol et
+          checkLeaderboardAchievements();
+        })
         .catch(err => console.error("Skor Firebase hatası:", err));
     }
+  }
+
+  function checkLeaderboardAchievements() {
+    if (!isFirebaseReady || !db) return;
+    
+    db.collection("scores")
+      .where("rounds", "==", currentTotalRounds)
+      .get()
+      .then(snapshot => {
+        const sortedDocs = snapshot.docs
+          .map(doc => doc.data())
+          .sort((a, b) => b.score - a.score);
+        
+        const newAchievements = { ...achievements };
+        
+        // Zirve Yolcusu
+        if (sortedDocs[0]?.username === username || sortedDocs[1]?.username === username || sortedDocs[2]?.username === username) {
+          if (!newAchievements.topThree) {
+            newAchievements.topThree = true;
+            showAchievementNotification(ACHIEVEMENTS.topThree);
+          }
+        }
+        
+        // Zirvenin Ta Kendisi
+        if (sortedDocs[0]?.username === username) {
+          if (!newAchievements.topOne) {
+            newAchievements.topOne = true;
+            showAchievementNotification(ACHIEVEMENTS.topOne);
+          }
+        }
+        
+        // Krallar başarımları
+        db.collection("scores").get().then(allSnapshot => {
+          let winsMap = {};
+          allSnapshot.docs.forEach(doc => {
+            const data = doc.data();
+            if (data.score > data.botScore) {
+              winsMap[data.username] = (winsMap[data.username] || 0) + 1;
+            }
+          });
+          
+          const sortedWinners = Object.keys(winsMap)
+            .map(name => ({ username: name, wins: winsMap[name] }))
+            .sort((a, b) => b.wins - a.wins);
+          
+          if (sortedWinners[0]?.username === username || sortedWinners[1]?.username === username || sortedWinners[2]?.username === username) {
+            if (!newAchievements.vizier) {
+              newAchievements.vizier = true;
+              showAchievementNotification(ACHIEVEMENTS.vizier);
+            }
+          }
+          
+          if (sortedWinners[0]?.username === username) {
+            if (!newAchievements.king) {
+              newAchievements.king = true;
+              showAchievementNotification(ACHIEVEMENTS.king);
+            }
+          }
+          
+          achievements = newAchievements;
+          localStorage.setItem('achievements', JSON.stringify(achievements));
+        });
+        
+        achievements = newAchievements;
+        localStorage.setItem('achievements', JSON.stringify(achievements));
+      });
   }
 
   function loadLocalHistory() {
@@ -1652,6 +2313,8 @@
 
     if (tabId === 'tabWinners') {
       loadWinnersTab();
+    } else if (tabId === 'tabAchievements') {
+      loadAchievementsList();
     }
   }
 
