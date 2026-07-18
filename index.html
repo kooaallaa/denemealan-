@@ -34,10 +34,10 @@
 
   /* ===== KARAKALEM TEMA ===== */
   body.theme-karakalem {
-    --paper: #1a1a1a;
+    --paper: #1c1c1c;
     --paper-line: #2a2a2a;
     --paper-margin: #444;
-    --card: #222;
+    --card: #242424;
     --ink: #e8e8e8;
     --ink-soft: #aaa;
     --pencil: #666;
@@ -50,8 +50,13 @@
     --shadow-ink: rgba(0,0,0,0.9);
     --double: #7a4fbf;
     --double-dark: #5a2f9a;
-    background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 30px, #2a2a2a 31px) !important;
-    filter: grayscale(0.3) contrast(1.1);
+    background-color: #1c1c1c !important;
+    background-image:
+      radial-gradient(ellipse at 20% 30%, rgba(80,80,80,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(60,60,60,0.15) 0%, transparent 50%),
+      repeating-linear-gradient(125deg, transparent 0px, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px),
+      repeating-linear-gradient(45deg, transparent 0px, transparent 8px, rgba(255,255,255,0.012) 8px, rgba(255,255,255,0.012) 9px) !important;
+    filter: none;
   }
   body.theme-karakalem .title::after { background: #555; }
   body.theme-karakalem .coin {
@@ -60,10 +65,10 @@
 
   /* ===== FÜŞIR (NEON) TEMA ===== */
   body.theme-fusir {
-    --paper: #0a0015;
+    --paper: #07001a;
     --paper-line: #1a0030;
     --paper-margin: #3a006a;
-    --card: #110022;
+    --card: #0f0025;
     --ink: #f0e0ff;
     --ink-soft: #c090ee;
     --pencil: #7040a0;
@@ -76,7 +81,12 @@
     --shadow-ink: rgba(200, 0, 255, 0.5);
     --double: #00ffff;
     --double-dark: #00aacc;
-    background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 30px, #1a0030 31px) !important;
+    background-color: #07001a !important;
+    background-image:
+      radial-gradient(ellipse at 25% 20%, rgba(180,0,255,0.22) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 75%, rgba(0,200,255,0.16) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(255,0,180,0.08) 0%, transparent 70%),
+      radial-gradient(circle at 15% 85%, rgba(100,0,200,0.18) 0%, transparent 35%) !important;
   }
   body.theme-fusir .title { 
     color: #ff88ff;
@@ -100,10 +110,10 @@
 
   /* ===== CYBERPUNK TEMA ===== */
   body.theme-cyberpunk {
-    --paper: #0d0d0d;
+    --paper: #080808;
     --paper-line: #1a1a00;
     --paper-margin: #333300;
-    --card: #111100;
+    --card: #0e0e00;
     --ink: #ffff00;
     --ink-soft: #cccc00;
     --pencil: #556600;
@@ -116,7 +126,13 @@
     --shadow-ink: rgba(255, 255, 0, 0.4);
     --double: #00ffff;
     --double-dark: #00aacc;
-    background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 30px, #1a1a00 31px) !important;
+    background-color: #080808 !important;
+    background-image:
+      repeating-linear-gradient(90deg, transparent 0px, transparent 39px, rgba(255,255,0,0.04) 39px, rgba(255,255,0,0.04) 40px),
+      repeating-linear-gradient(0deg, transparent 0px, transparent 39px, rgba(255,136,0,0.04) 39px, rgba(255,136,0,0.04) 40px),
+      radial-gradient(ellipse at 50% 0%, rgba(255,136,0,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 100% 100%, rgba(0,255,68,0.10) 0%, transparent 40%),
+      radial-gradient(ellipse at 0% 100%, rgba(0,200,255,0.08) 0%, transparent 35%) !important;
   }
   body.theme-cyberpunk .title {
     color: #ff8800;
@@ -203,21 +219,35 @@
     justify-content: center; text-align: center; flex: 1; position: relative; animation: fadeIn 0.5s ease;
   }
   .menu-header {
-    position: relative; width: 100%; display: flex;
-    justify-content: center; align-items: flex-start; margin-bottom: 20px;
+    width: 100%; display: flex; flex-direction: column;
+    align-items: center; margin-bottom: 20px; gap: 10px;
+  }
+  .menu-header-row {
+    width: 100%; display: flex;
+    justify-content: space-between; align-items: center;
   }
   .gold-display {
-    position: absolute; left: 0; top: 10px;
     font-family: 'Kalam', cursive; font-size: 18px; font-weight: 700;
     color: var(--gold-dark); display: flex; align-items: center; gap: 5px;
-    cursor: pointer;
+    cursor: pointer; flex-shrink: 0;
   }
   .gold-display:hover { opacity: 0.8; }
 
+  .menu-header-title {
+    font-family: 'Kalam', cursive; font-weight: 700; font-size: 42px;
+    letter-spacing: 0px; color: var(--ink); margin: 0; display: inline-block;
+    position: relative; transform: rotate(-2deg); z-index: 1;
+    text-align: center;
+  }
+  .menu-header-title::after {
+    content: ""; position: absolute; left: -6px; right: -10px; bottom: 8px;
+    height: 13px; background: var(--gold); opacity: 0.55;
+    transform: rotate(-1deg); z-index: -1; border-radius: 3px;
+  }
+
   /* Header icon buttons */
   .header-icons {
-    position: absolute; right: 0; top: 10px;
-    display: flex; gap: 6px; align-items: center;
+    display: flex; gap: 6px; align-items: center; flex-shrink: 0;
   }
   .icon-btn {
     width: 38px; height: 38px;
@@ -544,9 +574,10 @@
   .market-grid { display: flex; flex-direction: column; gap: 12px; }
   .market-item {
     background: var(--card); border: 2.5px solid var(--ink); border-radius: 12px;
-    padding: 14px; display: flex; justify-content: space-between; align-items: center;
+    padding: 12px; display: flex; flex-direction: column; gap: 10px;
     box-shadow: 3px 3px 0 var(--shadow-ink);
   }
+  .market-item-top { display: flex; justify-content: space-between; align-items: center; }
   .market-item-info { text-align: left; }
   .market-item-name { font-family: 'Kalam', cursive; font-size: 18px; font-weight: 700; color: var(--ink); }
   .market-item-desc { font-family: 'Patrick Hand', cursive; font-size: 12px; color: var(--ink-soft); }
@@ -559,6 +590,10 @@
   .market-price-btn:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--ink); }
   .market-price-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 2px 2px 0 var(--ink); }
   .market-price-btn.owned { background: var(--share); color: #fff; }
+  .theme-preview {
+    width: 100%; border-radius: 8px; overflow: hidden;
+    border: 2px solid rgba(0,0,0,0.2); display: block;
+  }
 
   /* KIYUZ / GUIDE */
   .guide-section { text-align: left; margin-bottom: 16px; }
@@ -614,12 +649,14 @@
   <!-- ANA MENU -->
   <div class="menu-screen" id="menuScreen">
     <div class="menu-header">
-      <div class="gold-display" id="goldDisplay" onclick="openMarketModal()">🪙 <span id="goldAmount">0</span></div>
-      <div class="title">The Game Theory</div>
-      <div class="header-icons">
-        <button class="icon-btn" onclick="openGuideModal()" title="Kılavuz">❓</button>
-        <button class="icon-btn" onclick="openMarketModal()" title="Market">🛒</button>
-        <button class="icon-btn" onclick="openSettingsModal()" title="Ayarlar">⚙️</button>
+      <div class="menu-header-title">The Game Theory</div>
+      <div class="menu-header-row">
+        <div class="gold-display" id="goldDisplay" onclick="openMarketModal()">🪙 <span id="goldAmount">0</span></div>
+        <div class="header-icons">
+          <button class="icon-btn" onclick="openGuideModal()" title="Kılavuz">❓</button>
+          <button class="icon-btn" onclick="openMarketModal()" title="Market">🛒</button>
+          <button class="icon-btn" onclick="openSettingsModal()" title="Ayarlar">⚙️</button>
+        </div>
       </div>
     </div>
 
@@ -954,6 +991,90 @@ function openMarketModal() {
 }
 function closeMarketModal() { document.getElementById('marketModal').style.display = 'none'; }
 
+function getThemePreviewSVG(key) {
+  const configs = {
+    default: {
+      card: '#fffdf5', ink: '#2e2b3d', gold: '#e3ab3d', share: '#2f8f5b', steal: '#d1483c',
+      titleText: '#2e2b3d', titleBg: 'rgba(227,171,61,0.55)',
+      bgEl: `
+        <rect width="300" height="90" fill="#f5efe0"/>
+        ${Array.from({length:7},(_,i)=>`<line x1="0" y1="${i*15+10}" x2="300" y2="${i*15+10}" stroke="#bcd6ea" stroke-width="0.8"/>`).join('')}
+        <line x1="22" y1="0" x2="22" y2="90" stroke="#e2a49f" stroke-width="1.5" opacity="0.6"/>
+      `
+    },
+    karakalem: {
+      card: '#242424', ink: '#e8e8e8', gold: '#c8a830', share: '#228855', steal: '#cc3333',
+      titleText: '#e8e8e8', titleBg: 'rgba(200,168,48,0.35)',
+      bgEl: `
+        <rect width="300" height="90" fill="#1c1c1c"/>
+        <rect width="300" height="90" fill="url(#kk_noise)" opacity="0.4"/>
+        <radialGradient id="kk_g1" cx="20%" cy="30%" r="50%"><stop offset="0%" stop-color="#505050" stop-opacity="0.2"/><stop offset="100%" stop-color="#505050" stop-opacity="0"/></radialGradient>
+        <radialGradient id="kk_g2" cx="80%" cy="70%" r="45%"><stop offset="0%" stop-color="#383838" stop-opacity="0.18"/><stop offset="100%" stop-color="#383838" stop-opacity="0"/></radialGradient>
+        <rect width="300" height="90" fill="url(#kk_g1)"/>
+        <rect width="300" height="90" fill="url(#kk_g2)"/>
+      `
+    },
+    fusir: {
+      card: '#0f0025', ink: '#f0e0ff', gold: '#ff88ff', share: '#00ffaa', steal: '#ff2266',
+      titleText: '#ff88ff', titleBg: 'rgba(255,0,255,0.18)',
+      bgEl: `
+        <rect width="300" height="90" fill="#07001a"/>
+        <radialGradient id="fs_g1" cx="25%" cy="20%" r="55%"><stop offset="0%" stop-color="#b400ff" stop-opacity="0.28"/><stop offset="100%" stop-color="#b400ff" stop-opacity="0"/></radialGradient>
+        <radialGradient id="fs_g2" cx="78%" cy="80%" r="50%"><stop offset="0%" stop-color="#00c8ff" stop-opacity="0.2"/><stop offset="100%" stop-color="#00c8ff" stop-opacity="0"/></radialGradient>
+        <radialGradient id="fs_g3" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#ff00b4" stop-opacity="0.08"/><stop offset="100%" stop-color="#ff00b4" stop-opacity="0"/></radialGradient>
+        <rect width="300" height="90" fill="url(#fs_g1)"/>
+        <rect width="300" height="90" fill="url(#fs_g2)"/>
+        <rect width="300" height="90" fill="url(#fs_g3)"/>
+      `
+    },
+    cyberpunk: {
+      card: '#0e0e00', ink: '#ffff00', gold: '#ff8800', share: '#00ff44', steal: '#ff4400',
+      titleText: '#ff8800', titleBg: 'rgba(255,68,0,0.28)',
+      bgEl: `
+        <rect width="300" height="90" fill="#080808"/>
+        <radialGradient id="cp_g1" cx="50%" cy="0%" r="65%"><stop offset="0%" stop-color="#ff8800" stop-opacity="0.18"/><stop offset="100%" stop-color="#ff8800" stop-opacity="0"/></radialGradient>
+        <radialGradient id="cp_g2" cx="100%" cy="100%" r="45%"><stop offset="0%" stop-color="#00ff44" stop-opacity="0.12"/><stop offset="100%" stop-color="#00ff44" stop-opacity="0"/></radialGradient>
+        <rect width="300" height="90" fill="url(#cp_g1)"/>
+        <rect width="300" height="90" fill="url(#cp_g2)"/>
+        ${Array.from({length:8},(_,i)=>`<line x1="${i*40}" y1="0" x2="${i*40}" y2="90" stroke="#ffff00" stroke-width="0.3" opacity="0.08"/>`).join('')}
+        ${Array.from({length:3},(_,i)=>`<line x1="0" y1="${i*40}" x2="300" y2="${i*40}" stroke="#ff8800" stroke-width="0.3" opacity="0.08"/>`).join('')}
+      `
+    }
+  };
+  const c = configs[key] || configs.default;
+  const W = 300, H = 90;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" class="theme-preview">
+    <defs></defs>
+    ${c.bgEl}
+    <!-- Başlık -->
+    <rect x="55" y="7" width="130" height="21" rx="4" fill="${c.titleBg}"/>
+    <text x="120" y="22" text-anchor="middle" font-family="Kalam,cursive" font-size="13" font-weight="bold" fill="${c.titleText}">The Game Theory</text>
+    <!-- Altın -->
+    <text x="8" y="22" font-family="sans-serif" font-size="10" fill="${c.gold}">🪙 42</text>
+    <!-- Butonlar -->
+    <circle cx="230" cy="17" r="8" fill="${c.card}" stroke="${c.ink}" stroke-width="1.2"/>
+    <text x="230" y="21" text-anchor="middle" font-size="8">❓</text>
+    <circle cx="249" cy="17" r="8" fill="${c.card}" stroke="${c.ink}" stroke-width="1.2"/>
+    <text x="249" y="21" text-anchor="middle" font-size="8">🛒</text>
+    <circle cx="268" cy="17" r="8" fill="${c.card}" stroke="${c.ink}" stroke-width="1.2"/>
+    <text x="268" y="21" text-anchor="middle" font-size="8">⚙️</text>
+    <!-- Kart -->
+    <rect x="14" y="34" width="272" height="48" rx="7" fill="${c.card}" stroke="${c.ink}" stroke-width="1.5"/>
+    <!-- Para -->
+    <circle cx="68" cy="58" r="13" fill="${c.gold}" stroke="${c.ink}" stroke-width="1"/>
+    <text x="68" y="62" text-anchor="middle" font-size="11">🪙</text>
+    <!-- Çal -->
+    <rect x="96" y="48" width="72" height="20" rx="5" fill="${c.steal}" stroke="${c.ink}" stroke-width="1"/>
+    <text x="132" y="62" text-anchor="middle" font-family="Kalam,cursive" font-size="11" font-weight="bold" fill="#fff">ÇAL</text>
+    <!-- Paylaş -->
+    <rect x="178" y="48" width="82" height="20" rx="5" fill="${c.share}" stroke="${c.ink}" stroke-width="1"/>
+    <text x="219" y="62" text-anchor="middle" font-family="Kalam,cursive" font-size="11" font-weight="bold" fill="#fff">PAYLAŞ</text>
+    <!-- Skor -->
+    <text x="132" y="44" text-anchor="middle" font-family="Patrick Hand,cursive" font-size="8" fill="${c.ink}">Sen: <tspan font-weight="bold" fill="${c.share}">7</tspan></text>
+    <text x="219" y="44" text-anchor="middle" font-family="Patrick Hand,cursive" font-size="8" fill="${c.ink}">Bot: <tspan font-weight="bold" fill="${c.steal}">5</tspan></text>
+  </svg>`;
+}
+
 function renderMarketGrid() {
   const grid = document.getElementById('marketGrid');
   grid.innerHTML = Object.entries(THEMES).map(([key, t]) => {
@@ -965,12 +1086,15 @@ function renderMarketGrid() {
     else { btnLabel = `${t.price} 🪙`; btnClass = ''; btnDisabled = goldCoins < t.price ? 'disabled' : ''; }
 
     return `<div class="market-item">
-      <div class="market-item-info">
-        <div class="market-item-name">${t.emoji} ${t.name}</div>
-        <div class="market-item-desc">${t.desc}</div>
+      <div class="market-item-top">
+        <div class="market-item-info">
+          <div class="market-item-name">${t.emoji} ${t.name}</div>
+          <div class="market-item-desc">${t.desc}</div>
+        </div>
+        <button class="market-price-btn ${btnClass}" ${btnDisabled}
+          onclick="buyOrSelectTheme('${key}')">${btnLabel}</button>
       </div>
-      <button class="market-price-btn ${btnClass}" ${btnDisabled}
-        onclick="buyOrSelectTheme('${key}')">${btnLabel}</button>
+      ${getThemePreviewSVG(key)}
     </div>`;
   }).join('');
 }
