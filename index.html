@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>The Game Theory — Çal ya da Paylaş</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=Share+Tech+Mono&family=Orbitron:wght@700;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=Share+Tech+Mono&family=Orbitron:wght@700;900&family=Press+Start+2P&display=swap');
 
   :root {
     --paper: #f5efe0;
@@ -28,9 +28,16 @@
     --blob-b: 46px 14px 44px 16px / 16px 44px 14px 46px;
     --blob-c: 22px 22px 22px 22px / 22px 22px 22px 22px;
     --title-color: #d4af37;
-    --theme-name: 'default';
-    /* Theme overrides will be applied via body classes */
+    --scroll-thumb: #8f8aa1;
+    --scroll-track: #f5efe0;
   }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--scroll-track); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ink-soft); }
+  * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) var(--scroll-track); }
 
   /* ===== KARAKALEM TEMA ===== */
   body.theme-karakalem {
@@ -50,6 +57,8 @@
     --shadow-ink: rgba(0,0,0,0.9);
     --double: #7a4fbf;
     --double-dark: #5a2f9a;
+    --scroll-thumb: #555;
+    --scroll-track: #1c1c1c;
     background-color: #1c1c1c !important;
     background-image:
       radial-gradient(ellipse at 20% 30%, rgba(80,80,80,0.18) 0%, transparent 55%),
@@ -65,10 +74,10 @@
 
   /* ===== FÜŞIR (NEON) TEMA ===== */
   body.theme-fusir {
-    --paper: #07001a;
-    --paper-line: #1a0030;
+    --paper: #05001a;
+    --paper-line: #100030;
     --paper-margin: #3a006a;
-    --card: #0f0025;
+    --card: #0a0020;
     --ink: #f0e0ff;
     --ink-soft: #c090ee;
     --pencil: #7040a0;
@@ -81,31 +90,56 @@
     --shadow-ink: rgba(200, 0, 255, 0.5);
     --double: #00ffff;
     --double-dark: #00aacc;
-    background-color: #07001a !important;
+    --scroll-thumb: #7040a0;
+    --scroll-track: #05001a;
+    background-color: #05001a !important;
     background-image:
-      radial-gradient(ellipse at 25% 20%, rgba(180,0,255,0.22) 0%, transparent 50%),
-      radial-gradient(ellipse at 75% 75%, rgba(0,200,255,0.16) 0%, transparent 45%),
-      radial-gradient(ellipse at 50% 50%, rgba(255,0,180,0.08) 0%, transparent 70%),
-      radial-gradient(circle at 15% 85%, rgba(100,0,200,0.18) 0%, transparent 35%) !important;
+      /* Neon ışın demetleri */
+      conic-gradient(from 30deg at 25% 25%, rgba(180,0,255,0.12) 0deg, transparent 60deg, transparent 180deg, rgba(0,200,255,0.1) 200deg, transparent 240deg, transparent 360deg),
+      conic-gradient(from 210deg at 75% 70%, rgba(255,0,180,0.1) 0deg, transparent 50deg, transparent 160deg, rgba(100,0,255,0.12) 180deg, transparent 240deg),
+      /* Geometrik grid */
+      repeating-linear-gradient(0deg, transparent 0px, transparent 39px, rgba(255,0,255,0.06) 39px, rgba(255,0,255,0.06) 40px),
+      repeating-linear-gradient(90deg, transparent 0px, transparent 39px, rgba(0,255,255,0.06) 39px, rgba(0,255,255,0.06) 40px),
+      /* Parlama noktaları */
+      radial-gradient(circle at 20% 30%, rgba(255,0,255,0.25) 0%, transparent 35%),
+      radial-gradient(circle at 80% 60%, rgba(0,255,255,0.2) 0%, transparent 30%),
+      radial-gradient(circle at 50% 80%, rgba(180,0,255,0.18) 0%, transparent 40%),
+      /* Yatay ışın çizgileri */
+      linear-gradient(175deg, transparent 48%, rgba(255,0,255,0.08) 49%, rgba(255,0,255,0.08) 51%, transparent 52%),
+      linear-gradient(5deg, transparent 48%, rgba(0,255,255,0.06) 49%, rgba(0,255,255,0.06) 51%, transparent 52%) !important;
   }
-  body.theme-fusir .title { 
+  body.theme-fusir .title {
     color: #ff88ff;
-    text-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff;
+    text-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff, 0 0 80px #8800ff;
     font-family: 'Orbitron', sans-serif !important;
+    letter-spacing: 2px;
   }
-  body.theme-fusir .title::after { background: #ff00ff; opacity: 0.3; }
+  body.theme-fusir .title::after { background: #ff00ff; opacity: 0.35; height: 15px; bottom: 6px; }
   body.theme-fusir .coin {
     background: radial-gradient(circle at 35% 30%, #ff88ff 0%, #cc00ff 45%, #660099 100%);
-    box-shadow: 0 0 20px #ff00ff;
+    box-shadow: 0 0 30px #ff00ff, 0 0 60px rgba(255,0,255,0.4);
   }
   body.theme-fusir .action-btn {
-    box-shadow: 4px 4px 0 var(--ink), 0 0 15px var(--gold-dark);
+    box-shadow: 4px 4px 0 var(--ink), 0 0 20px var(--gold-dark);
+    text-shadow: 0 0 6px rgba(255,255,255,0.5);
   }
   body.theme-fusir .stage {
-    box-shadow: 6px 6px 0 var(--shadow-ink), 0 0 30px rgba(255,0,255,0.3);
+    box-shadow: 6px 6px 0 var(--shadow-ink), 0 0 40px rgba(255,0,255,0.35), inset 0 0 30px rgba(0,255,255,0.05);
+    border-color: rgba(255,0,255,0.4);
   }
   body.theme-fusir .input-card {
-    box-shadow: 5px 5px 0 var(--shadow-ink), 0 0 20px rgba(255,0,255,0.2);
+    box-shadow: 5px 5px 0 var(--shadow-ink), 0 0 25px rgba(255,0,255,0.25);
+  }
+  body.theme-fusir .menu-header-title {
+    font-family: 'Orbitron', sans-serif !important;
+    letter-spacing: 2px;
+    color: #ff88ff;
+    text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff;
+  }
+  body.theme-fusir .menu-header-title::after { background: #ff00ff; opacity: 0.35; }
+  body.theme-fusir .round-pill {
+    border-color: rgba(0,255,255,0.6);
+    color: #00ffff;
   }
 
   /* ===== CYBERPUNK TEMA ===== */
@@ -126,6 +160,8 @@
     --shadow-ink: rgba(255, 255, 0, 0.4);
     --double: #00ffff;
     --double-dark: #00aacc;
+    --scroll-thumb: #556600;
+    --scroll-track: #080808;
     background-color: #080808 !important;
     background-image:
       repeating-linear-gradient(90deg, transparent 0px, transparent 39px, rgba(255,255,0,0.04) 39px, rgba(255,255,0,0.04) 40px),
@@ -153,6 +189,96 @@
     box-shadow: 6px 6px 0 var(--shadow-ink), 0 0 30px rgba(255,136,0,0.3);
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
   }
+  body.theme-cyberpunk .menu-header-title {
+    font-family: 'Share Tech Mono', monospace !important;
+    letter-spacing: 3px;
+    color: #ff8800;
+    text-shadow: 0 0 10px #ff8800, 0 0 30px #ff4400;
+  }
+
+  /* ===== MINECRAFT TEMA ===== */
+  body.theme-minecraft {
+    --paper: #5a4a3a;
+    --paper-line: #4a3a2a;
+    --paper-margin: #8b6b4a;
+    --card: #6b5b4b;
+    --ink: #ffffaa;
+    --ink-soft: #ccbb88;
+    --pencil: #9a8a6a;
+    --steal: #cc3333;
+    --steal-dark: #991111;
+    --share: #55aa33;
+    --share-dark: #337722;
+    --gold: #ffaa00;
+    --gold-dark: #cc8800;
+    --shadow-ink: rgba(0,0,0,0.8);
+    --double: #aa55ff;
+    --double-dark: #7733cc;
+    --scroll-thumb: #7a6a5a;
+    --scroll-track: #5a4a3a;
+    background-color: #5a4a3a !important;
+    background-image:
+      /* Piksel blok dokusu */
+      repeating-linear-gradient(0deg, transparent 0px, transparent 15px, rgba(0,0,0,0.12) 15px, rgba(0,0,0,0.12) 16px),
+      repeating-linear-gradient(90deg, transparent 0px, transparent 15px, rgba(0,0,0,0.12) 15px, rgba(0,0,0,0.12) 16px),
+      /* Çimen yeşili üst şerit */
+      linear-gradient(0deg, transparent 0%, transparent 85%, rgba(85,170,51,0.25) 85%, rgba(85,170,51,0.25) 100%),
+      /* Işık gradyanı */
+      radial-gradient(ellipse at 50% 40%, rgba(255,255,200,0.08) 0%, transparent 60%) !important;
+    image-rendering: pixelated;
+  }
+  body.theme-minecraft .title {
+    color: #ffff55;
+    text-shadow: 3px 3px 0 #3a2a1a, 0 0 10px rgba(255,255,100,0.5);
+    font-family: 'Press Start 2P', cursive !important;
+    font-size: 26px;
+    letter-spacing: 1px;
+    transform: none;
+  }
+  body.theme-minecraft .title::after { display: none; }
+  body.theme-minecraft .menu-header-title {
+    font-family: 'Press Start 2P', cursive !important;
+    font-size: 20px;
+    color: #ffff55;
+    text-shadow: 3px 3px 0 #3a2a1a;
+    transform: none;
+    letter-spacing: 1px;
+  }
+  body.theme-minecraft .menu-header-title::after { display: none; }
+  body.theme-minecraft .coin {
+    background: radial-gradient(circle at 35% 30%, #ffff88 0%, #ffaa00 45%, #885500 100%);
+    border: 3px solid #3a2a1a;
+    image-rendering: pixelated;
+  }
+  body.theme-minecraft .action-btn {
+    border-radius: 0 !important;
+    box-shadow: 4px 4px 0 #3a2a1a;
+    font-family: 'Press Start 2P', cursive !important;
+    font-size: 13px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  }
+  body.theme-minecraft .stage {
+    border-radius: 0 !important;
+    box-shadow: 6px 6px 0 #3a2a1a;
+    border-width: 3px;
+  }
+  body.theme-minecraft .input-card {
+    border-radius: 0 !important;
+    box-shadow: 5px 5px 0 #3a2a1a;
+    border-width: 3px;
+  }
+  body.theme-minecraft .choice-btn {
+    border-radius: 0 !important;
+    font-family: 'Press Start 2P', cursive !important;
+    font-size: 14px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  }
+  body.theme-minecraft .round-pill {
+    border-radius: 0 !important;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+  }
+  body.theme-minecraft .modal-card { border-radius: 0 !important; }
 
   body.dark-theme {
     --paper: #1a1921;
@@ -163,6 +289,8 @@
     --ink-soft: #b0aabf;
     --pencil: #646077;
     --shadow-ink: rgba(0, 0, 0, 0.6);
+    --scroll-thumb: #646077;
+    --scroll-track: #1a1921;
   }
 
   * { box-sizing: border-box; }
@@ -245,7 +373,6 @@
     transform: rotate(-1deg); z-index: -1; border-radius: 3px;
   }
 
-  /* Header icon buttons */
   .header-icons {
     display: flex; gap: 6px; align-items: center; flex-shrink: 0;
   }
@@ -927,15 +1054,14 @@ const CIRC = 176;
 let username = localStorage.getItem('username') || "";
 let usernameClaimed = localStorage.getItem('usernameClaimed') === 'true';
 let maxUnlockedLevel = parseInt(localStorage.getItem('maxUnlockedLevel')) || 1;
-// Seviye 20'nin gerçekten tamamlandığını ayrı kayıt
 let level20Completed = localStorage.getItem('level20Completed') === 'true';
 let selectedLevel = 1;
 let currentTotalRounds = 7;
 let targetScore = 17;
 let isLevelMode = false;
 let isTournamentMode = false;
-let tournamentRound = 0;   // 0=bitmedi, >=1 aktif
-let tournamentData = null; // bracket data
+let tournamentRound = 0;
+let tournamentData = null;
 let pendingTournamentContinue = false;
 let goldCoins = parseInt(localStorage.getItem('goldCoins')) || 0;
 let selectedTitle = localStorage.getItem('selectedTitle') || '';
@@ -955,13 +1081,14 @@ let timerInterval = null, decided = false;
 let playerHistory = [], botHistory = [];
 let scoreHistoryPlayer = [0], scoreHistoryBot = [0];
 
-// Hayvan isimleri - turnuva botları için
+// Hayvan isimleri - turnuva botları için (sayısız, saf isimler)
 const ANIMAL_NAMES = [
   "Tilki","Kaplan","Kurt","Ayı","Kartal","Aslan","Panter","Kobra",
   "Çakal","Vaşak","Sırtlan","Boğa","Akrep","Timsah","Jaguar","Atmaca"
 ];
 function randomAnimalName() {
-  return ANIMAL_NAMES[Math.floor(Math.random() * ANIMAL_NAMES.length)] + Math.floor(Math.random()*99+1);
+  // Sayı eklemeden saf hayvan ismi döndür
+  return ANIMAL_NAMES[Math.floor(Math.random() * ANIMAL_NAMES.length)];
 }
 
 // ============================================================
@@ -970,13 +1097,13 @@ function randomAnimalName() {
 const THEMES = {
   default: { name: 'Varsayılan', desc: 'Defterli klasik görünüm', price: 0, emoji: '📓', class: '' },
   karakalem: { name: 'Karakalem', desc: 'Koyu, dramatik çizim stili', price: 113, emoji: '✏️', class: 'theme-karakalem' },
-  fusir: { name: 'Füşır ✨', desc: 'Futuristik neon parıltı', price: 225, emoji: '💜', class: 'theme-fusir' },
+  fusir: { name: 'Füşır ✨', desc: 'Futuristik neon geometri', price: 225, emoji: '💜', class: 'theme-fusir' },
   cyberpunk: { name: 'Cyberpunk', desc: 'Karanlık şehir, neon ışıklar', price: 301, emoji: '🤖', class: 'theme-cyberpunk' },
+  minecraft: { name: 'Minecraft', desc: 'Piksel bloklu retro dünya', price: 404, emoji: '⛏️', class: 'theme-minecraft' },
 };
 
 function applyTheme(themeKey) {
   const body = document.body;
-  // Tüm tema class'larını temizle
   Object.values(THEMES).forEach(t => { if(t.class) body.classList.remove(t.class); });
   const t = THEMES[themeKey];
   if (t && t.class) body.classList.add(t.class);
@@ -1007,7 +1134,6 @@ function getThemePreviewSVG(key) {
       titleText: '#e8e8e8', titleBg: 'rgba(200,168,48,0.35)',
       bgEl: `
         <rect width="300" height="90" fill="#1c1c1c"/>
-        <rect width="300" height="90" fill="url(#kk_noise)" opacity="0.4"/>
         <radialGradient id="kk_g1" cx="20%" cy="30%" r="50%"><stop offset="0%" stop-color="#505050" stop-opacity="0.2"/><stop offset="100%" stop-color="#505050" stop-opacity="0"/></radialGradient>
         <radialGradient id="kk_g2" cx="80%" cy="70%" r="45%"><stop offset="0%" stop-color="#383838" stop-opacity="0.18"/><stop offset="100%" stop-color="#383838" stop-opacity="0"/></radialGradient>
         <rect width="300" height="90" fill="url(#kk_g1)"/>
@@ -1015,16 +1141,18 @@ function getThemePreviewSVG(key) {
       `
     },
     fusir: {
-      card: '#0f0025', ink: '#f0e0ff', gold: '#ff88ff', share: '#00ffaa', steal: '#ff2266',
-      titleText: '#ff88ff', titleBg: 'rgba(255,0,255,0.18)',
+      card: '#0a0020', ink: '#f0e0ff', gold: '#ff88ff', share: '#00ffaa', steal: '#ff2266',
+      titleText: '#ff88ff', titleBg: 'rgba(255,0,255,0.25)',
       bgEl: `
-        <rect width="300" height="90" fill="#07001a"/>
-        <radialGradient id="fs_g1" cx="25%" cy="20%" r="55%"><stop offset="0%" stop-color="#b400ff" stop-opacity="0.28"/><stop offset="100%" stop-color="#b400ff" stop-opacity="0"/></radialGradient>
-        <radialGradient id="fs_g2" cx="78%" cy="80%" r="50%"><stop offset="0%" stop-color="#00c8ff" stop-opacity="0.2"/><stop offset="100%" stop-color="#00c8ff" stop-opacity="0"/></radialGradient>
-        <radialGradient id="fs_g3" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#ff00b4" stop-opacity="0.08"/><stop offset="100%" stop-color="#ff00b4" stop-opacity="0"/></radialGradient>
+        <rect width="300" height="90" fill="#05001a"/>
+        <radialGradient id="fs_g1" cx="25%" cy="20%" r="55%"><stop offset="0%" stop-color="#b400ff" stop-opacity="0.3"/><stop offset="100%" stop-color="#b400ff" stop-opacity="0"/></radialGradient>
+        <radialGradient id="fs_g2" cx="78%" cy="80%" r="50%"><stop offset="0%" stop-color="#00c8ff" stop-opacity="0.22"/><stop offset="100%" stop-color="#00c8ff" stop-opacity="0"/></radialGradient>
         <rect width="300" height="90" fill="url(#fs_g1)"/>
         <rect width="300" height="90" fill="url(#fs_g2)"/>
-        <rect width="300" height="90" fill="url(#fs_g3)"/>
+        ${Array.from({length:6},(_,i)=>`<line x1="${i*50}" y1="0" x2="${i*50}" y2="90" stroke="#ff00ff" stroke-width="0.5" opacity="0.12"/>`).join('')}
+        ${Array.from({length:4},(_,i)=>`<line x1="0" y1="${i*25}" x2="300" y2="${i*25}" stroke="#00ffff" stroke-width="0.5" opacity="0.1"/>`).join('')}
+        <line x1="0" y1="90" x2="300" y2="0" stroke="#ff00ff" stroke-width="0.6" opacity="0.08"/>
+        <line x1="0" y1="0" x2="300" y2="90" stroke="#00ffff" stroke-width="0.6" opacity="0.08"/>
       `
     },
     cyberpunk: {
@@ -1037,7 +1165,17 @@ function getThemePreviewSVG(key) {
         <rect width="300" height="90" fill="url(#cp_g1)"/>
         <rect width="300" height="90" fill="url(#cp_g2)"/>
         ${Array.from({length:8},(_,i)=>`<line x1="${i*40}" y1="0" x2="${i*40}" y2="90" stroke="#ffff00" stroke-width="0.3" opacity="0.08"/>`).join('')}
-        ${Array.from({length:3},(_,i)=>`<line x1="0" y1="${i*40}" x2="300" y2="${i*40}" stroke="#ff8800" stroke-width="0.3" opacity="0.08"/>`).join('')}
+      `
+    },
+    minecraft: {
+      card: '#6b5b4b', ink: '#ffffaa', gold: '#ffaa00', share: '#55aa33', steal: '#cc3333',
+      titleText: '#ffff55', titleBg: 'rgba(0,0,0,0)',
+      bgEl: `
+        <rect width="300" height="90" fill="#5a4a3a"/>
+        ${Array.from({length:10},(_,i)=>`<line x1="0" y1="${i*9}" x2="300" y2="${i*9}" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>`).join('')}
+        ${Array.from({length:20},(_,i)=>`<line x1="${i*15}" y1="0" x2="${i*15}" y2="90" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>`).join('')}
+        <rect x="0" y="75" width="300" height="15" fill="rgba(85,170,51,0.3)"/>
+        <rect x="0" y="76" width="300" height="1" fill="rgba(85,170,51,0.5)"/>
       `
     }
   };
@@ -1046,30 +1184,22 @@ function getThemePreviewSVG(key) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" class="theme-preview">
     <defs></defs>
     ${c.bgEl}
-    <!-- Başlık -->
     <rect x="55" y="7" width="130" height="21" rx="4" fill="${c.titleBg}"/>
     <text x="120" y="22" text-anchor="middle" font-family="Kalam,cursive" font-size="13" font-weight="bold" fill="${c.titleText}">The Game Theory</text>
-    <!-- Altın -->
     <text x="8" y="22" font-family="sans-serif" font-size="10" fill="${c.gold}">🪙 42</text>
-    <!-- Butonlar -->
     <circle cx="230" cy="17" r="8" fill="${c.card}" stroke="${c.ink}" stroke-width="1.2"/>
     <text x="230" y="21" text-anchor="middle" font-size="8">❓</text>
     <circle cx="249" cy="17" r="8" fill="${c.card}" stroke="${c.ink}" stroke-width="1.2"/>
     <text x="249" y="21" text-anchor="middle" font-size="8">🛒</text>
     <circle cx="268" cy="17" r="8" fill="${c.card}" stroke="${c.ink}" stroke-width="1.2"/>
     <text x="268" y="21" text-anchor="middle" font-size="8">⚙️</text>
-    <!-- Kart -->
     <rect x="14" y="34" width="272" height="48" rx="7" fill="${c.card}" stroke="${c.ink}" stroke-width="1.5"/>
-    <!-- Para -->
     <circle cx="68" cy="58" r="13" fill="${c.gold}" stroke="${c.ink}" stroke-width="1"/>
     <text x="68" y="62" text-anchor="middle" font-size="11">🪙</text>
-    <!-- Çal -->
     <rect x="96" y="48" width="72" height="20" rx="5" fill="${c.steal}" stroke="${c.ink}" stroke-width="1"/>
     <text x="132" y="62" text-anchor="middle" font-family="Kalam,cursive" font-size="11" font-weight="bold" fill="#fff">ÇAL</text>
-    <!-- Paylaş -->
     <rect x="178" y="48" width="82" height="20" rx="5" fill="${c.share}" stroke="${c.ink}" stroke-width="1"/>
     <text x="219" y="62" text-anchor="middle" font-family="Kalam,cursive" font-size="11" font-weight="bold" fill="#fff">PAYLAŞ</text>
-    <!-- Skor -->
     <text x="132" y="44" text-anchor="middle" font-family="Patrick Hand,cursive" font-size="8" fill="${c.ink}">Sen: <tspan font-weight="bold" fill="${c.share}">7</tspan></text>
     <text x="219" y="44" text-anchor="middle" font-family="Patrick Hand,cursive" font-size="8" fill="${c.ink}">Bot: <tspan font-weight="bold" fill="${c.steal}">5</tspan></text>
   </svg>`;
@@ -1125,17 +1255,17 @@ function openGuideModal() { document.getElementById('guideModal').style.display 
 function closeGuideModal() { document.getElementById('guideModal').style.display = 'none'; }
 
 // ============================================================
-// 🎖️ BAŞARIMLAR
+// 🎖️ BAŞARIMLAR (Ünvan = Başarım Adı)
 // ============================================================
 const ACHIEVEMENTS = {
-  coldStart:     { id:'coldStart',     name:'Soğuk Bir Başlangıç', desc:'Seviyeli modda herhangi bir seviyeyi ilk kez kazandın.',   title:'Çaylak' },
-  unlucky13:     { id:'unlucky13',     name:'Uğursuz 13',           desc:'Seviyeli modda 13. Seviyeyi yenerek geçtin.',              title:'Uğursuz' },
-  finisher:      { id:'finisher',      name:'Bitirici',              desc:'Seviyeli modda 20. Seviyeyi tamamlayıp oyunu bitirdin!',  title:'Efsane' },
-  dirty7:        { id:'dirty7',        name:"Pis 7'li",              desc:"7 turluk maçta bottan fazla puan topladın ama genel skor hedefine ulaşamadın.", title:'Şanssız Kahraman' },
+  coldStart:     { id:'coldStart',     name:'Soğuk Bir Başlangıç', desc:'Seviyeli modda herhangi bir seviyeyi ilk kez kazandın.',   title:'Soğuk Bir Başlangıç' },
+  unlucky13:     { id:'unlucky13',     name:'Uğursuz 13',           desc:'Seviyeli modda 13. Seviyeyi yenerek geçtin.',              title:'Uğursuz 13' },
+  finisher:      { id:'finisher',      name:'Bitirici',              desc:'Seviyeli modda 20. Seviyeyi tamamlayıp oyunu bitirdin!',  title:'Bitirici' },
+  dirty7:        { id:'dirty7',        name:"Pis 7'li",              desc:"7 turluk maçta bottan fazla puan topladın ama genel skor hedefine ulaşamadın.", title:"Pis 7'li" },
   unluckyDouble: { id:'unluckyDouble', name:'Talihsiz',              desc:'14 turluk hızlı maçta çift puan turunu kazandın fakat maçı kaybettin.', title:'Talihsiz' },
-  doubleOkay:    { id:'doubleOkay',    name:'Çift Okey',             desc:"21 turluk oyunda iki çift puan turunda da 10'ar puan kazandın.", title:'Double Ustası' },
-  topThree:      { id:'topThree',      name:'Zirve Yolcusu',         desc:'Liderlik tablosunda herhangi bir kategoride ilk 3\'e girdin.', title:'Yolcu' },
-  topOne:        { id:'topOne',        name:'Zirvenin Ta Kendisi',   desc:'Liderlik tablosunda 1. oldun.',                            title:'Zirve' },
+  doubleOkay:    { id:'doubleOkay',    name:'Çift Okey',             desc:"21 turluk oyunda iki çift puan turunda da 10'ar puan kazandın.", title:'Çift Okey' },
+  topThree:      { id:'topThree',      name:'Zirve Yolcusu',         desc:'Liderlik tablosunda herhangi bir kategoride ilk 3\'e girdin.', title:'Zirve Yolcusu' },
+  topOne:        { id:'topOne',        name:'Zirvenin Ta Kendisi',   desc:'Liderlik tablosunda 1. oldun.',                            title:'Zirvenin Ta Kendisi' },
   vizier:        { id:'vizier',        name:'Vezir',                  desc:'Krallar listesinde ilk 3\'e girdin.',                     title:'Vezir' },
   king:          { id:'king',          name:'Kral',                   desc:"Krallar listesinde 1. oldun.",                            title:'Kral' },
 };
@@ -1143,39 +1273,32 @@ const ACHIEVEMENTS = {
 function checkAchievements() {
   const prev = { ...achievements };
 
-  // Soğuk başlangıç: seviyeli modda herhangi bir seviye kazanılınca
   if (isLevelMode && youScore > botScore && youScore >= targetScore && !prev.coldStart) {
     achievements.coldStart = true;
     showAchievementNotification(ACHIEVEMENTS.coldStart);
   }
-  // Uğursuz 13: seviye 13 kazanılınca (puan hedefine ulaşıp kazanmak)
   if (isLevelMode && selectedLevel === 13 && youScore >= targetScore && !prev.unlucky13) {
     achievements.unlucky13 = true;
     showAchievementNotification(ACHIEVEMENTS.unlucky13);
   }
-  // Bitirici: seviye 20 gerçekten tamamlandıysa
   if (level20Completed && !prev.finisher) {
     achievements.finisher = true;
     showAchievementNotification(ACHIEVEMENTS.finisher);
   }
-  // Pis 7'li: 7 turda bot > 0, oyuncu > bot ama hedef tutturulamadı
   if (!isLevelMode && !isTournamentMode && currentTotalRounds === 7
       && youScore > botScore && youScore < targetScore && !prev.dirty7) {
     achievements.dirty7 = true;
     showAchievementNotification(ACHIEVEMENTS.dirty7);
   }
-  // Talihsiz: 14 turda çift puan turunda (7. tur, index 6) steal+share oldu = +10 kazandı ama maçı kaybetti
   if (!isLevelMode && !isTournamentMode && currentTotalRounds === 14 && !prev.unluckyDouble) {
-    const doubleIdx = 6; // 7. tur
+    const doubleIdx = 6;
     if (playerHistory[doubleIdx] === 'steal' && botHistory[doubleIdx] === 'share') {
-      // 7. turda çaldı, bot paylaştı → oyuncu o turda 5*2=10 puan kazandı
       if (youScore < botScore) {
         achievements.unluckyDouble = true;
         showAchievementNotification(ACHIEVEMENTS.unluckyDouble);
       }
     }
   }
-  // Çift Okey: 21 turda 5. (idx 4) ve 17. (idx 16) turlarda steal+share
   if (!isLevelMode && !isTournamentMode && currentTotalRounds === 21 && !prev.doubleOkay) {
     const d1 = playerHistory[4] === 'steal' && botHistory[4] === 'share';
     const d2 = playerHistory[16] === 'steal' && botHistory[16] === 'share';
@@ -1334,7 +1457,6 @@ const BOT_STRATEGIES = {
     quotes:["Savaş meydanında zafer benimdir.","Strateji olmadan savaş kazanılmaz.","Tarih kitapları bu zaferi yazacak."],
     getQuote(){return this.quotes[Math.floor(Math.random()*this.quotes.length)]}},
 };
-// Turnuva botları için basit rastgele strateji
 function makeTournamentBotDecide(aggressiveness) {
   return () => Math.random() < aggressiveness ? 'steal' : 'share';
 }
@@ -1424,7 +1546,6 @@ function tryEnterGame() {
     document.getElementById('menuScreen').style.display='flex';
     document.getElementById('usernameInput').value=username;
     loadLeaderboardByRound(7); loadLocalHistory(); loadAchievementsList();
-    // İlk kez girişte kılavuzu göster
     if (!localStorage.getItem('guideShown')) { openGuideModal(); localStorage.setItem('guideShown','true'); }
   }
 }
@@ -1451,21 +1572,14 @@ function renderLevelGrid() {
 // ============================================================
 // 🏟️ TURNUVA
 // ============================================================
-/*
-  Turnuva yapısı: 8 katılımcı → Çeyrek Final (4 maç, 7 tur) → Yarı Final (2 maç, 14 tur) → Final (1 maç, 21 tur)
-  Oyuncu her zaman birinci slot'ta. Diğerleri hayvan isimli botlar.
-  Maç sonrası otomatik geçilmez, "Sıradaki Maça Geç" butonu çıkar.
-*/
 function generateTournamentData() {
-  // 8 isimlerin oluşturulması
   const players = [username];
   const used = new Set([username]);
+  // Saf hayvan isimleri, sayı yok. Her isim bir turnuvada sadece 1 kez.
   while(players.length < 8) {
     const n = randomAnimalName();
     if (!used.has(n)) { used.add(n); players.push(n); }
   }
-  // Çeyrek final eşleşmeleri: [0vs1, 2vs3, 4vs5, 6vs7]
-  // Oyuncu(0) her zaman sol tarafta, botlarla eşleşir
   const qfMatches = [
     { p1: players[0], p2: players[1], winner: null, score1: null, score2: null },
     { p1: players[2], p2: players[3], winner: null, score1: null, score2: null },
@@ -1479,15 +1593,14 @@ function generateTournamentData() {
       { name: 'Yarı Final', matches: [], totalRounds: 14 },
       { name: 'Final', matches: [], totalRounds: 21 },
     ],
-    currentRound: 0,       // 0=QF, 1=SF, 2=Final
-    playerMatchIdx: 0,     // oyuncunun bu raunddaki maç indexi
+    currentRound: 0,
+    playerMatchIdx: 0,
     eliminated: false,
     champion: null,
   };
 }
 
 function simulateBotMatch(bot1, bot2, rounds) {
-  // İki bot arasındaki maçı simüle et
   let s1=0, s2=0;
   for(let i=0;i<rounds;i++){
     const c1 = Math.random()<0.55?'share':'steal';
@@ -1506,7 +1619,6 @@ function simulateBotMatch(bot1, bot2, rounds) {
 
 function openTournamentMode() {
   document.getElementById('tournamentModal').style.display='flex';
-  // Yeni turnuva datası oluştur ve göster
   tournamentData = generateTournamentData();
   renderTournamentBracketModal();
 }
@@ -1530,7 +1642,6 @@ function renderTournamentBracketModal() {
         </div>`;
       });
     } else {
-      const placeholders = ri===1?['SF1','SF2','SF3','SF4']:['F1','F2'];
       for(let i=0;i<(ri===1?2:1);i++){
         const m = rnd.matches[i];
         if(m){
@@ -1555,34 +1666,28 @@ function startTournament() {
   isTournamentMode=true;
   isLevelMode=false;
   closeTournamentModal();
-  // Çeyrek final, oyuncunun maçını başlat
   playTournamentMatch();
 }
 
 function playTournamentMatch() {
   const td = tournamentData;
   const rndData = td.rounds[td.currentRound];
-  // Bot eşleşmelerini simüle et (oyuncunun maçı hariç)
   rndData.matches.forEach((m, mi) => {
-    if (m.winner) return; // zaten oynanmış
+    if (m.winner) return;
     const isPlayerMatch = m.p1===username || m.p2===username;
     if (!isPlayerMatch) {
-      // Simüle et
       const res = simulateBotMatch(m.p1, m.p2, rndData.totalRounds);
       m.winner=res.winner; m.score1=res.score1; m.score2=res.score2;
     }
   });
-  // Oyuncunun maçını bul
   const pMatch = rndData.matches.find(m => m.p1===username || m.p2===username);
   if (!pMatch) { tournamentEliminated(); return; }
   const opponent = pMatch.p1===username ? pMatch.p2 : pMatch.p1;
-  // Seviye: round'a göre
   const lvls = [[1,5,10],[8,12,16],[18,19,20]];
   const lvl = lvls[td.currentRound][Math.floor(Math.random()*3)];
   selectedLevel = lvl;
   currentTotalRounds = rndData.totalRounds;
   targetScore = rndData.totalRounds===7?17:rndData.totalRounds===14?34:51;
-  // Banner güncelle
   showTournamentBanner(`🏟️ ${rndData.name} — vs ${opponent}`);
   document.getElementById('hudBotName').textContent = opponent;
   initGame();
@@ -1598,56 +1703,45 @@ function continueTournament() {
   document.getElementById('continueTournamentBtn').style.display='none';
   const td = tournamentData;
   const rndData = td.rounds[td.currentRound];
-  // Oyuncunun maçını bul ve winner yaz
   const pMatch = rndData.matches.find(m => m.p1===username || m.p2===username);
   if (!pMatch) return;
 
-  // Elendi mi?
   if (td.eliminated) {
     tournamentEliminated();
     return;
   }
 
-  // Bu round'ın tüm maçları bitti mi?
   const allDone = rndData.matches.every(m=>m.winner);
   if (!allDone) return;
 
-  // Bir sonraki round'u hazırla
   const winners = rndData.matches.map(m=>m.winner);
   td.currentRound++;
 
   if (td.currentRound > 2) {
-    // Şampiyon
     tournamentChampion();
     return;
   }
 
   const nextRnd = td.rounds[td.currentRound];
-  // Maçları oluştur
   const nextMatches = [];
   for (let i=0;i<winners.length;i+=2) {
     nextMatches.push({ p1:winners[i], p2:winners[i+1], winner:null, score1:null, score2:null });
   }
   nextRnd.matches = nextMatches;
 
-  // Oyuncu bu roundda var mı?
   const pInNext = nextMatches.some(m=>m.p1===username||m.p2===username);
   if (!pInNext) { tournamentEliminated(); return; }
 
-  // Turnuva ekranını güncelle
   exitToMenu();
   openTournamentMode_Continue();
 }
 
 function openTournamentMode_Continue() {
-  // Menüye dönmeden turnuva modalını aç
   setTimeout(()=>{
     document.getElementById('tournamentModal').style.display='flex';
     renderTournamentBracketModal();
-    // Başlat butonunu "Sıradaki Maç" olarak değiştir
     const startBtn = document.querySelector('#tournamentModal .action-btn');
     if(startBtn){ startBtn.textContent=`Sıradaki Maçı Oyna`; startBtn.onclick=()=>{ closeTournamentModal(); playTournamentMatch(); }; }
-    const closeBtn = document.querySelector('#tournamentModal .action-btn:last-child');
   },200);
 }
 
@@ -1710,7 +1804,6 @@ function initGame() {
   document.getElementById('finalArea').style.display='none';
   document.getElementById('resultArea').style.display='none';
   document.getElementById('playArea').style.display='block';
-  // Arka planı temizle
   document.body.classList.remove('outcome-win','outcome-lose','outcome-draw','double-mode');
 
   showBotDialog();
@@ -1729,7 +1822,6 @@ function startRound() {
   if(round>currentTotalRounds){ return endGame(); }
 
   decided=false;
-  // Önemli düzeltme: timeLeft'i her zaman 20 ile başlat, duraklama durumunda pauseTimeLeft kullanılır
   if(!isPaused) timeLeft=20;
 
   let isDouble=false;
@@ -1757,7 +1849,6 @@ function startRound() {
   document.getElementById('playArea').style.display='block';
   document.getElementById('resultArea').style.display='none';
 
-  // Sayacı güncelle - duraklama sonrası kaldığı yerden devam
   const startTime = isPaused ? pauseTimeLeft : 20;
   timeLeft = startTime;
   tc.style.strokeDashoffset = CIRC - (timeLeft/20)*CIRC;
@@ -1786,8 +1877,6 @@ function pauseGame() {
 
 function resumeGame() {
   document.getElementById('pauseModal').style.display='none';
-  // Duraklama sonrası: mevcut round'u kaldığı yerden başlat
-  // round sayacını artırmaması için önce round'u geri al
   round--;
   startRound();
 }
@@ -1874,16 +1963,13 @@ function endGame() {
   document.body.classList.remove('outcome-win','outcome-lose','outcome-draw','double-mode');
   document.body.classList.add('outcome-'+outcome);
 
-  // İstatistikler
   const youCoop = playerHistory.length>0 ? Math.round(playerHistory.filter(h=>h==='share').length/playerHistory.length*100) : 0;
   const botCoop = botHistory.length>0 ? Math.round(botHistory.filter(h=>h==='share').length/botHistory.length*100) : 0;
   document.getElementById('statYouCoop').textContent=youCoop+'%';
   document.getElementById('statBotCoop').textContent=botCoop+'%';
 
-  // Skor grafiği
   drawMiniChart();
 
-  // Tur tarihi
   const container=document.getElementById('historyVisualContainer');
   container.innerHTML=playerHistory.map((p,idx)=>`
     <div class="visual-history-item">
@@ -1899,12 +1985,10 @@ function endGame() {
     if(youScore>=targetScore) {
       sm.textContent=`BAŞARILI! (${targetScore} puan hedefine ulaştın)`;
       sm.style.color='var(--share-dark)';
-      // Seviye ilerlemesi
       if(selectedLevel===maxUnlockedLevel&&maxUnlockedLevel<20){
         maxUnlockedLevel++;
         localStorage.setItem('maxUnlockedLevel',maxUnlockedLevel);
       }
-      // Seviye 20 tamamlandı mı?
       if(selectedLevel===20&&!level20Completed){
         level20Completed=true;
         localStorage.setItem('level20Completed','true');
@@ -1923,7 +2007,6 @@ function endGame() {
       pMatch.score2=pMatch.p2===username?youScore:botScore;
     }
     if(outcome==='win'){
-      // Tüm round maçları simülasyonunu güncelle
       rndData.matches.forEach(m=>{
         if(!m.winner){
           const r=simulateBotMatch(m.p1,m.p2,rndData.totalRounds);
@@ -1978,7 +2061,6 @@ function drawMiniChart() {
     p.setAttribute('stroke-linecap','round'); p.setAttribute('stroke-linejoin','round');
     svg.appendChild(p);
   };
-  // Sıfır çizgisi
   const zl=document.createElementNS('http://www.w3.org/2000/svg','line');
   zl.setAttribute('x1',PAD); zl.setAttribute('y1',toY(0));
   zl.setAttribute('x2',W-PAD); zl.setAttribute('y2',toY(0));
@@ -1988,7 +2070,6 @@ function drawMiniChart() {
   makePath(scoreHistoryPlayer,'#1f6b44');
   makePath(scoreHistoryBot,'#a3352b');
 
-  // Legend
   const mkL=(x,color,label)=>{
     const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
     r.setAttribute('x',x); r.setAttribute('y',H-8); r.setAttribute('width',10); r.setAttribute('height',4);
@@ -2024,7 +2105,6 @@ function saveToFirebaseAndLocal() {
 
 function checkLeaderboardAchievements() {
   if(!isFirebaseReady||!db) return;
-  // Sunucu tarafında orderBy+limit kullan
   db.collection('scores').where('rounds','==',currentTotalRounds)
     .orderBy('score','desc').limit(10).get()
     .then(snap=>{
@@ -2033,7 +2113,6 @@ function checkLeaderboardAchievements() {
       if(idxMe>=0&&idxMe<3&&!achievements.topThree){ achievements.topThree=true; showAchievementNotification(ACHIEVEMENTS.topThree); localStorage.setItem('achievements',JSON.stringify(achievements)); }
       if(idxMe===0&&!achievements.topOne){ achievements.topOne=true; showAchievementNotification(ACHIEVEMENTS.topOne); localStorage.setItem('achievements',JSON.stringify(achievements)); }
     }).catch(()=>{
-      // Fallback: client-side sort
       db.collection('scores').where('rounds','==',currentTotalRounds).limit(200).get().then(snap=>{
         const sorted=snap.docs.map(d=>d.data()).sort((a,b)=>b.score-a.score).slice(0,10);
         const idxMe=sorted.findIndex(d=>d.username===username);
@@ -2078,11 +2157,10 @@ function loadLeaderboardByRound(rounds) {
   if(!isFirebaseReady){ el.innerHTML='<div style="text-align:center;padding:15px;color:var(--ink-soft);font-size:12px;">Firebase bağlantısı yok.</div>'; return; }
   el.innerHTML='<div style="text-align:center;padding:20px;color:var(--ink-soft);">Yükleniyor...</div>';
 
-  // Sunucu tarafında sıralı sorgu
   const query = db.collection('scores').where('rounds','==',rounds);
   (isFirebaseReady ? query.orderBy('score','desc').limit(10).get() : Promise.reject())
     .then(snap=>{
-      if(snap.empty){ el.innerHTML=`<div style="text-align:center;padding:20px;color:var(--ink-soft);">${rounds} Tur için rekor yok. İlk sen ol!</div>`; return; }
+      if(snap.size===0){ el.innerHTML=`<div style="text-align:center;padding:20px;color:var(--ink-soft);">${rounds} Tur için rekor yok. İlk sen ol!</div>`; return; }
       let idx=1;
       el.innerHTML=snap.docs.map(d=>{
         const dt=d.data();
@@ -2093,10 +2171,9 @@ function loadLeaderboardByRound(rounds) {
       }).join('');
     })
     .catch(()=>{
-      // Fallback: client-side sort
       db.collection('scores').where('rounds','==',rounds).limit(200).get()
         .then(snap=>{
-          if(snap.empty){ el.innerHTML=`<div style="text-align:center;padding:20px;color:var(--ink-soft);">${rounds} Tur için rekor yok.</div>`; return; }
+          if(snap.size===0){ el.innerHTML=`<div style="text-align:center;padding:20px;color:var(--ink-soft);">${rounds} Tur için rekor yok.</div>`; return; }
           const sorted=snap.docs.map(d=>d.data()).sort((a,b)=>b.score-a.score).slice(0,10);
           let idx=1;
           el.innerHTML=sorted.map(d=>`<div class="table-item">
@@ -2121,8 +2198,9 @@ function switchTab(tabId, btn) {
 function loadWinnersTab() {
   const el=document.getElementById('winnersList');
   if(!isFirebaseReady){ el.innerHTML='<div style="text-align:center;padding:15px;color:var(--ink-soft);font-size:12px;">Firebase bağlantısı yok.</div>'; return; }
+  el.innerHTML='<div style="text-align:center;padding:20px;color:var(--ink-soft);">Yükleniyor...</div>';
   db.collection('scores').get().then(snap=>{
-    if(snap.empty){ el.innerHTML='<div style="text-align:center;padding:20px;color:var(--ink-soft);">Kraliyet koltuğu henüz boş!</div>'; return; }
+    if(!snap || snap.size === 0){ el.innerHTML='<div style="text-align:center;padding:20px;color:var(--ink-soft);">Kraliyet koltuğu henüz boş!</div>'; return; }
     let wm={};
     snap.docs.forEach(d=>{const dt=d.data();if(dt.score>dt.botScore)wm[dt.username]=(wm[dt.username]||0)+1;});
     const sw=Object.keys(wm).map(n=>({username:n,wins:wm[n]})).sort((a,b)=>b.wins-a.wins).slice(0,5);
