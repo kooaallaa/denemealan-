@@ -1,7 +1,4 @@
-// Sabitler, bot stratejileri verisi, global değişkenler
-// ============================================================
-// 🌐 FIREBASE
-// ============================================================
+// 🌐 FIREBASE BAŞLANGIÇ
 const firebaseConfig = {
   apiKey: "AIzaSyCDXpbVlu8KPR0nPumTcBV9gemyzwkZtGQ",
   authDomain: "gametheory-koalasfirst.firebaseapp.com",
@@ -18,6 +15,9 @@ try {
     isFirebaseReady = true;
   }
 } catch(e) { console.error("Firebase hatası:", e); }
+
+// Sabitler, bot stratejileri verisi, global değişkenler
+// ============================================================
 
 // ============================================================
 // ⚙️ STATE
@@ -62,4 +62,3 @@ function randomAnimalName() {
   // Sayı eklemeden saf hayvan ismi döndür
   return ANIMAL_NAMES[Math.floor(Math.random() * ANIMAL_NAMES.length)];
 }
-
