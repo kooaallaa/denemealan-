@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>The Game Theory — Çal ya da Paylaş</title>
-  <!-- Firebase CDN -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -51,9 +48,18 @@
 
       <label class="input-label">HIZLI EŞLEŞME TUR SAYISI</label>
       <div class="select-group">
-        <button class="select-btn active" id="mode7Btn" onclick="setMode(7,this)">7 Tur</button>
-        <button class="select-btn" id="mode14Btn" onclick="setMode(14,this)">14 Tur</button>
-        <button class="select-btn" id="mode21Btn" onclick="setMode(21,this)">21 Tur</button>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <button class="select-btn active" id="mode7Btn" onclick="setMode(7,this)">7 Tur</button>
+          <div class="streak-indicator" id="streak7" style="font-size:10px;color:var(--gold-dark);">🔥 0</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <button class="select-btn" id="mode14Btn" onclick="setMode(14,this)">14 Tur</button>
+          <div class="streak-indicator" id="streak14" style="font-size:10px;color:var(--gold-dark);">🔥 0</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <button class="select-btn" id="mode21Btn" onclick="setMode(21,this)">21 Tur</button>
+          <div class="streak-indicator" id="streak21" style="font-size:10px;color:var(--gold-dark);">🔥 0</div>
+        </div>
       </div>
 
       <div class="mode-container">
@@ -105,7 +111,7 @@
   <div class="modal-overlay" id="tournamentModal">
     <div class="modal-card">
       <div class="modal-title">🏟️ Turnuva</div>
-      <div class="modal-desc">Giriş: 2 🪙 | Ödül: 10 🪙<br>8 katılımcı • Eleme usulü • Son kalan kazanır</div>
+      <div class="modal-desc">Giriş: 2 🪙 | Ödül: 20 🪙<br>8 katılımcı • Eleme usulü • Son kalan kazanır</div>
       <div id="tournamentBracket" class="tournament-bracket"></div>
       <div style="display:flex;gap:10px;">
         <button class="close-modal-btn" style="flex:1;" onclick="closeTournamentModal()">Geri Dön</button>
@@ -166,7 +172,7 @@
         <p style="font-family:'Patrick Hand',cursive;font-size:13px;color:var(--ink-soft);">
           <b>Hızlı Eşleşme:</b> 7/14/21 tur, rastgele bot. Kazanırsan altın kazanırsın.<br>
           <b>Seviyeli:</b> 14 tur, 34 puan hedefi. Seviyeleri sırayla aşarsın.<br>
-          <b>Turnuva:</b> 2 🪙 giriş, 8 katılımcı, eleme usulü. Kazanana 10 🪙!
+          <b>Turnuva:</b> 2 🪙 giriş, 8 katılımcı, eleme usulü. Kazanana 20 🪙!
         </p>
       </div>
       <div class="guide-section">
@@ -280,7 +286,6 @@
   <div id="achievementNotification" class="achievement-notification"></div>
 </div>
 
-  <!-- Yükleme sırası önemli: config en önce, firebase en sonda -->
   <script src="js/config.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/achievements.js"></script>
