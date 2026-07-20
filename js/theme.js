@@ -155,4 +155,3 @@ function buyOrSelectTheme(key) {
   renderMarketGrid();
   document.getElementById('marketGoldAmt').textContent = goldCoins;
 }
-
