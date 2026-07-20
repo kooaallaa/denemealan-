@@ -1,4 +1,7 @@
-// 🌐 FIREBASE BAŞLANGIÇ
+// Sabitler, bot stratejileri verisi, global değişkenler
+// ============================================================
+// 🌐 FIREBASE
+// ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyCDXpbVlu8KPR0nPumTcBV9gemyzwkZtGQ",
   authDomain: "gametheory-koalasfirst.firebaseapp.com",
@@ -15,9 +18,6 @@ try {
     isFirebaseReady = true;
   }
 } catch(e) { console.error("Firebase hatası:", e); }
-
-// Sabitler, bot stratejileri verisi, global değişkenler
-// ============================================================
 
 // ============================================================
 // ⚙️ STATE
@@ -53,12 +53,14 @@ let timerInterval = null, decided = false;
 let playerHistory = [], botHistory = [];
 let scoreHistoryPlayer = [0], scoreHistoryBot = [0];
 
+// Kazanma serileri (tur sayısına göre ayrı)
+let winStreaks = JSON.parse(localStorage.getItem('winStreaks')) || { 7: 0, 14: 0, 21: 0 };
+
 // Hayvan isimleri - turnuva botları için (sayısız, saf isimler)
 const ANIMAL_NAMES = [
   "Tilki","Kaplan","Kurt","Ayı","Kartal","Aslan","Panter","Kobra",
   "Çakal","Vaşak","Sırtlan","Boğa","Akrep","Timsah","Jaguar","Atmaca"
 ];
 function randomAnimalName() {
-  // Sayı eklemeden saf hayvan ismi döndür
   return ANIMAL_NAMES[Math.floor(Math.random() * ANIMAL_NAMES.length)];
 }
