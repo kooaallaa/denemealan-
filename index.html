@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Game Theory — Çal ya da Paylaş</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HOŞGELDIN -->
+  <div class="welcome-screen" id="welcomeScreen" style="display:none;">
+    <div class="title" style="margin-bottom:20px;">Hoş Geldin!</div>
+    <div class="input-card" style="transform:rotate(1deg);">
+      <div class="subtitle" style="margin-bottom:10px;">Oyuna başlamadan önce kendine benzersiz bir isim seçmelisin.</div>
+      <label class="input-label">OYUNCU ADI</label>
+      <div class="input-row-group">
+        <input type="text" id="welcomeUsernameInput" class="premium-input" placeholder="Adını Yaz..." maxlength="15">
+        <button class="check-name-btn" id="welcomeCheckBtn" onclick="verifyAndClaimName('welcome')">✓</button>
+      </div>
+      <div id="welcomeNameStatus" class="name-status-msg"></div>
+      <button class="action-btn" id="welcomeStartBtn" onclick="tryEnterGame()" style="width:100%;display:none;">Oyuna Giriş Yap 🚪</button>
+    </div>
+  </div>
+
+  <!-- ANA MENU -->
+  <div class="menu-screen" id="menuScreen">
+    <div class="menu-header">
+      <div class="menu-header-title">The Game Theory</div>
+      <div class="menu-header-row">
+        <div class="gold-display" id="goldDisplay" onclick="openMarketModal()">🪙 <span id="goldAmount">0</span></div>
+        <div class="header-icons">
+          <button class="icon-btn" onclick="openGuideModal()" title="Kılavuz">❓</button>
+          <button class="icon-btn" onclick="openMarketModal()" title="Market">🛒</button>
+          <button class="icon-btn" onclick="openSettingsModal()" title="Ayarlar">⚙️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-card">
+      <label class="input-label">OYUNCU ADI (Değiştirmek için yazıp ✓ butonuna bas!)</label>
+      <div class="input-row-group">
+        <input type="text" id="usernameInput" class="premium-input" placeholder="Adını Yaz..." maxlength="15">
+        <button class="check-name-btn" id="menuCheckBtn" onclick="verifyAndClaimName('menu')">✓</button>
+      </div>
+      <div id="menuNameStatus" class="name-status-msg"></div>
+
+      <label class="input-label">HIZLI EŞLEŞME TUR SAYISI</label>
+      <div class="select-group">
+        <button class="select-btn active" id="mode7Btn" onclick="setMode(7,this)">7 Tur</button>
+        <button class="select-btn" id="mode14Btn" onclick="setMode(14,this)">14 Tur</button>
+        <button class="select-btn" id="mode21Btn" onclick="setMode(21,this)">21 Tur</button>
+      </div>
+
+      <div class="mode-container">
+        <button class="action-btn" onclick="startQuickMatch()">⚡ HIZLI EŞLEŞME</button>
+        <button class="action-btn secondary" onclick="openLevelModal()">🏆 SEVİYELİ MODLAR</button>
+        <button class="action-btn secondary" onclick="openTournamentMode()">🏟️ TURNUVA (2 🪙)</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-link active" onclick="switchTab('tabGlobal',this)">🏆 Zirve</button>
+      <button class="tab-link" onclick="switchTab('tabWinners',this)">👑 Krallar</button>
+      <button class="tab-link" onclick="switchTab('tabAchievements',this)">🎖️ Başarım</button>
+      <button class="tab-link" onclick="switchTab('tabHistory',this)">📜 Geçmiş</button>
+    </div>
+    <div class="tab-content active" id="tabGlobal">
+      <div class="sub-filters">
+        <button class="sub-filter-btn active" id="sub7Btn" onclick="loadLeaderboardByRound(7)">7 Tur</button>
+        <button class="sub-filter-btn" id="sub14Btn" onclick="loadLeaderboardByRound(14)">14 Tur</button>
+        <button class="sub-filter-btn" id="sub21Btn" onclick="loadLeaderboardByRound(21)">21 Tur</button>
+      </div>
+      <div id="globalList"><div style="text-align:center;padding:20px;">Yükleniyor...</div></div>
+    </div>
+    <div class="tab-content" id="tabWinners">
+      <div id="winnersList"><div style="text-align:center;padding:20px;">Yükleniyor...</div></div>
+    </div>
+    <div class="tab-content" id="tabAchievements">
+      <div id="achievementsList"></div>
+    </div>
+    <div class="tab-content" id="tabHistory">
+      <div id="historyList"></div>
+    </div>
+  </div>
+
+  <!-- SEVİYE MODALİ -->
+  <div class="modal-overlay" id="levelModal">
+    <div class="modal-card">
+      <div class="modal-title">Savaş Seviyeleri</div>
+      <div class="modal-desc">Seviyeli maçlar <b>14 tur</b> sürer ve <b>34 puana</b> ulaşman gerekir. Seviyeleri sırayla yenerek açarsın.</div>
+      <div class="level-grid" id="levelGrid"></div>
+      <div style="display:flex;gap:10px;">
+        <button class="close-modal-btn" style="flex:1;" onclick="closeLevelModal()">Geri Dön</button>
+        <button class="action-btn" style="flex:2;font-size:14px;padding:10px;" onclick="startLevelMatch()">Başlat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TURNUVA MODALİ -->
+  <div class="modal-overlay" id="tournamentModal">
+    <div class="modal-card">
+      <div class="modal-title">🏟️ Turnuva</div>
+      <div class="modal-desc">Giriş: 2 🪙 | Ödül: 10 🪙<br>8 katılımcı • Eleme usulü • Son kalan kazanır</div>
+      <div id="tournamentBracket" class="tournament-bracket"></div>
+      <div style="display:flex;gap:10px;">
+        <button class="close-modal-btn" style="flex:1;" onclick="closeTournamentModal()">Geri Dön</button>
+        <button class="action-btn" style="flex:2;font-size:14px;padding:10px;" onclick="startTournament()">Turnuvayı Başlat (2 🪙)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AYARLAR MODALİ -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-title">⚙️ Ayarlar</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding:0 10px;">
+        <span style="font-family:'Patrick Hand',cursive;font-size:16px;">🌓 Koyu Tema</span>
+        <input type="checkbox" id="themeToggle" onchange="toggleDarkTheme()" style="width:22px;height:22px;cursor:pointer;">
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+        <button class="close-modal-btn" id="muteToggleBtn" style="width:46px;height:46px;padding:0;font-size:18px;" onclick="toggleMute()">🔊</button>
+        <input type="range" id="volumeSlider" min="0" max="100" value="40" oninput="setVolume(this.value)" style="flex:1;">
+      </div>
+      <button class="close-modal-btn" style="width:100%;" onclick="closeSettingsModal()">Kapat</button>
+    </div>
+  </div>
+
+  <!-- MARKET MODALİ -->
+  <div class="modal-overlay" id="marketModal">
+    <div class="modal-card">
+      <div class="modal-title">🛒 Market</div>
+      <div class="modal-desc">Altınlarınla tema satın al. Temalar tüm arayüzü değiştirir!</div>
+      <div style="text-align:center;margin-bottom:16px;font-family:'Kalam',cursive;font-size:22px;color:var(--gold-dark);">Bakiyen: 🪙 <span id="marketGoldAmt">0</span></div>
+      <div class="market-grid" id="marketGrid"></div>
+      <br>
+      <button class="close-modal-btn" style="width:100%;" onclick="closeMarketModal()">Kapat</button>
+    </div>
+  </div>
+
+  <!-- KILAVUZ MODALİ -->
+  <div class="modal-overlay" id="guideModal">
+    <div class="modal-card" style="transform:rotate(0deg);">
+      <div class="modal-title">📖 Oyun Kılavuzu</div>
+      <div class="guide-section">
+        <h3>🎯 Amaç</h3>
+        <p style="font-family:'Patrick Hand',cursive;font-size:13px;color:var(--ink-soft);">
+          Her turda yapay zekaya karşı <b>Çal</b> veya <b>Paylaş</b> kararı verirsin. Oyun sonunda hedefe ulaşman ya da rakibinden yüksek puan almanı gerekir.
+        </p>
+      </div>
+      <div class="guide-section">
+        <h3>💰 Puan Tablosu</h3>
+        <table class="guide-table">
+          <tr><th>Sen \ Bot</th><th>Paylaşır</th><th>Çalar</th></tr>
+          <tr><td><b>Paylaşırsın</b></td><td>+3 / +3</td><td>+1 / +5</td></tr>
+          <tr><td><b>Çalarsın</b></td><td>+5 / +1</td><td>-1 / -1</td></tr>
+        </table>
+        <p style="font-family:'Patrick Hand',cursive;font-size:11px;color:var(--ink-soft);margin-top:6px;">⚡ Özel turlarda tüm puanlar x2 olur!</p>
+      </div>
+      <div class="guide-section">
+        <h3>🎮 Modlar</h3>
+        <p style="font-family:'Patrick Hand',cursive;font-size:13px;color:var(--ink-soft);">
+          <b>Hızlı Eşleşme:</b> 7/14/21 tur, rastgele bot. Kazanırsan altın kazanırsın.<br>
+          <b>Seviyeli:</b> 14 tur, 34 puan hedefi. Seviyeleri sırayla aşarsın.<br>
+          <b>Turnuva:</b> 2 🪙 giriş, 8 katılımcı, eleme usulü. Kazanana 10 🪙!
+        </p>
+      </div>
+      <div class="guide-section">
+        <h3>🪙 Altın</h3>
+        <p style="font-family:'Patrick Hand',cursive;font-size:13px;color:var(--ink-soft);">
+          Hızlı eşleşme kazanırsan: 7 tur→1🪙, 14 tur→2🪙, 21 tur→3🪙.<br>
+          Marketten tema satın almak için altın kullanırsın.
+        </p>
+      </div>
+      <button class="close-modal-btn" style="width:100%;" onclick="closeGuideModal()">Anladım!</button>
+    </div>
+  </div>
+
+  <!-- DURAKLAT MODALİ -->
+  <div class="modal-overlay" id="pauseModal">
+    <div class="modal-card">
+      <div class="modal-title">⏸️ Duraklatıldı</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <button class="action-btn" onclick="resumeGame()">▶️ Devam Et</button>
+        <button class="action-btn secondary" onclick="exitToMenuFromPause()">🏠 Ana Menüye Dön</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OYUN EKRANI -->
+  <div class="game-screen" id="gameScreen">
+    <div class="game-header">
+      <div class="tournament-status-banner" id="tournamentBanner"></div>
+      <button class="pause-btn" onclick="pauseGame()">⏸️</button>
+    </div>
+    <div class="hud">
+      <div class="score-box">
+        <div class="score-label" id="hudPlayerName">Sen</div>
+        <span class="title-badge" id="hudTitleBadge"></span>
+        <div class="score-value you" id="youScore">0</div>
+      </div>
+      <div class="round-pill" id="roundPill">Tur 1</div>
+      <div class="score-box">
+        <div class="score-label" id="hudBotName">Yapay Zeka</div>
+        <div class="score-value bot" id="botScore">0</div>
+        <div class="bot-status-container neutral" id="botStatus">Nötr</div>
+      </div>
+    </div>
+
+    <div class="stage" id="stagePanel">
+      <div id="playArea" style="width:100%;text-align:center;">
+        <div class="coin-wrapper">
+          <div class="coin" id="coin">🪙</div>
+          <div class="timer-ring" style="margin-top:10px;">
+            <svg width="64" height="64">
+              <circle class="timer-track" cx="32" cy="32" r="28"></circle>
+              <circle class="timer-progress" id="timerCircle" cx="32" cy="32" r="28" stroke-dasharray="176" stroke-dashoffset="0"></circle>
+            </svg>
+            <div class="timer-num" id="timerNum">20</div>
+          </div>
+        </div>
+        <div class="prompt" id="prompt">Kararını ver.</div>
+        <div class="choices">
+          <button class="choice-btn steal" id="stealBtn" onclick="makeChoice('steal')">ÇAL</button>
+          <button class="choice-btn share" id="shareBtn" onclick="makeChoice('share')">PAYLAŞ</button>
+        </div>
+        <div class="bot-dialog" id="botDialog"></div>
+      </div>
+
+      <div id="resultArea" class="result-card">
+        <div class="result-line"><span id="pNameText">Sen</span>: <span id="youChoiceText">—</span></div>
+        <div class="result-line">Rakip: <span id="botChoiceText">—</span></div>
+        <div class="points-line" id="pointsText"></div>
+        <div class="next-hint" id="nextHint">Sıradaki tur hazırlanıyor…</div>
+      </div>
+
+      <div id="finalArea" class="final">
+        <div class="final-title" id="finalTitle">Oyun Bitti</div>
+        <div class="final-sub" id="finalSub">Skorlar hesaplandı.</div>
+
+        <div class="mini-chart-wrap">
+          <div class="mini-chart-title">Skor Grafiği</div>
+          <svg class="mini-chart-svg" id="miniChartSvg" viewBox="0 0 300 80"></svg>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-box-label">Senin İş Birliğin</div>
+            <div class="stat-box-val" id="statYouCoop">—</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-label">Botun İş Birliği</div>
+            <div class="stat-box-val" id="statBotCoop">—</div>
+          </div>
+        </div>
+
+        <div class="canvas-container">
+          <div id="historyVisualContainer" class="visual-history"></div>
+        </div>
+
+        <div class="stats-card">
+          <div class="stats-title">Maç Özeti</div>
+          <div class="stats-row">Rakip: <span id="statBotStrategy">—</span></div>
+          <div class="stats-row">Durum: <span id="statMission">—</span></div>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+          <button class="replay-btn" id="continueTournamentBtn" onclick="continueTournament()" style="display:none;background:var(--gold);">Sıradaki Maça Geç ▶</button>
+          <button class="replay-btn" onclick="exitToMenu()">Ana Menüye Dön</button>
+        </div>
+      </div>
+    </div>
+    <div class="log" id="log"></div>
+  </div>
+
+  <div id="achievementNotification" class="achievement-notification"></div>
+</div>
+
+  <!-- Yükleme sırası önemli: config en önce, firebase en sonda -->
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/bot.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/tournament.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/firebase.js"></script>
+</body>
+</html>
