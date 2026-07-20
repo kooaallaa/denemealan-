@@ -1,20 +1,23 @@
 // Firebase kayıt, liderboard, geçmiş
 // ============================================================
 function saveToFirebaseAndLocal() {
-  if(isLevelMode) return;
+  // isLevelMode kontrolü kaldırıldı, her maç kaydedilsin
+  let botNameRecord = isTournamentMode 
+    ? document.getElementById('hudBotName').textContent 
+    : BOT_STRATEGIES[selectedLevel].name;
 
-  const rec={
-    username,score:youScore,botScore,rounds:currentTotalRounds,
-    botName:BOT_STRATEGIES[selectedLevel].name,timestamp:Date.now()
+  const rec = {
+    username, score: youScore, botScore, rounds: currentTotalRounds,
+    botName: botNameRecord, timestamp: Date.now()
   };
-  let lh=JSON.parse(localStorage.getItem('matchHistory'))||[];
+  let lh = JSON.parse(localStorage.getItem('matchHistory')) || [];
   lh.unshift(rec);
-  localStorage.setItem('matchHistory',JSON.stringify(lh.slice(0,30)));
+  localStorage.setItem('matchHistory', JSON.stringify(lh.slice(0, 30)));
 
-  if(isFirebaseReady&&db){
+  if (isFirebaseReady && db) {
     db.collection('scores').add(rec)
-      .then(()=>checkLeaderboardAchievements())
-      .catch(e=>console.error(e));
+      .then(() => checkLeaderboardAchievements())
+      .catch(e => console.error(e));
   }
 }
 
@@ -118,7 +121,7 @@ function loadWinnersTab() {
     if(!snap || snap.size === 0){ el.innerHTML='<div style="text-align:center;padding:20px;color:var(--ink-soft);">Kraliyet koltuğu henüz boş!</div>'; return; }
     let wm={};
     snap.docs.forEach(d=>{const dt=d.data();if(dt.score>dt.botScore)wm[dt.username]=(wm[dt.username]||0)+1;});
-    const sw=Object.keys(wm).map(n=>({username:n,wins:wm[n]})).sort((a,b)=>b.wins-a.wins).slice(0,5);
+    const sw=Object.keys(wm).map(n=>({username:n,wins:wm[n]})).sort((a,b)=>b.wins-a.wins).slice(0, 10); // 10 kişi göster
     if(sw.length===0){ el.innerHTML='<div style="text-align:center;padding:20px;color:var(--ink-soft);">Yapay zekayı yenebilen henüz çıkmadı!</div>'; return; }
     let idx=1;
     el.innerHTML=sw.map(w=>`<div class="table-item">
