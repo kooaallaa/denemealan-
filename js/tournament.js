@@ -5,7 +5,6 @@
 function generateTournamentData() {
   const players = [username];
   const used = new Set([username]);
-  // Saf hayvan isimleri, sayı yok. Her isim bir turnuvada sadece 1 kez.
   while(players.length < 8) {
     const n = randomAnimalName();
     if (!used.has(n)) { used.add(n); players.push(n); }
@@ -182,10 +181,9 @@ function tournamentEliminated() {
 }
 function tournamentChampion() {
   isTournamentMode=false;
-  goldCoins+=10; localStorage.setItem('goldCoins',goldCoins); updateGoldDisplay();
-  alert("🏆 TURNUVA ŞAMPİYONUSUN! 10 🪙 kazandın!");
+  goldCoins += 20; // 10 yerine 20
+  localStorage.setItem('goldCoins', goldCoins);
+  updateGoldDisplay();
+  alert("🏆 TURNUVA ŞAMPİYONUSUN! 20 🪙 kazandın!");
   exitToMenu();
 }
-
-// ============================================================
-// 🎮 OYUN AKIŞI
